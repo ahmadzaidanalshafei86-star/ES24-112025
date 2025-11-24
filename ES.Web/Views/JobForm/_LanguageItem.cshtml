@@ -1,0 +1,54 @@
+﻿@model EmployeeLanguage
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    var index = ViewData["Index"];
+}
+
+<div class="item-row mb-3 p-3 border rounded" data-index="@index">
+    <div class="row">
+        <div class="col-md-3">
+            <label>@Localizer["Language"]</label>
+            <select name="Languages[@index].LanguageId" class="form-control" required>
+                <option value="">@Localizer["Select"]</option>
+                <option value="1" selected="@(Model.LanguageId == 1)">@Localizer["English"]</option>
+                <option value="2" selected="@(Model.LanguageId == 2)">@Localizer["Arabic"]</option>
+                <option value="3" selected="@(Model.LanguageId == 3)">@Localizer["Other"]</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label>@Localizer["Reading Level"]</label>
+            <select name="Languages[@index].ReadingLevel" class="form-control" required>
+                <option value="">@Localizer["Select"]</option>
+                <option value="1" selected="@(Model.ReadingLevel == 1)">@Localizer["Basic"]</option>
+                <option value="2" selected="@(Model.ReadingLevel == 2)">@Localizer["Intermediate"]</option>
+                <option value="3" selected="@(Model.ReadingLevel == 3)">@Localizer["Advanced"]</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label>@Localizer["Writing Level"]</label>
+            <select name="Languages[@index].WritingLevel" class="form-control" required>
+                <option value="">@Localizer["Select"]</option>
+                <option value="1" selected="@(Model.WritingLevel == 1)">@Localizer["Basic"]</option>
+                <option value="2" selected="@(Model.WritingLevel == 2)">@Localizer["Intermediate"]</option>
+                <option value="3" selected="@(Model.WritingLevel == 3)">@Localizer["Advanced"]</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label>@Localizer["Speaking Level"]</label>
+            <select name="Languages[@index].SpeakingLevel" class="form-control" required>
+                <option value="">@Localizer["Select"]</option>
+                <option value="1" selected="@(Model.SpeakingLevel == 1)">@Localizer["Basic"]</option>
+                <option value="2" selected="@(Model.SpeakingLevel == 2)">@Localizer["Intermediate"]</option>
+                <option value="3" selected="@(Model.SpeakingLevel == 3)">@Localizer["Advanced"]</option>
+            </select>
+        </div>
+        <div class="col-md-1 d-flex align-items-end">
+            <button type="button" class="btn btn-danger btn-sm remove-item">
+                <i class="fa fa-trash"></i>
+            </button>
+        </div>
+    </div>
+</div>

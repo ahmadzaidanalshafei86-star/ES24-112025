@@ -1,0 +1,271 @@
+﻿@model SupplierFormViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@section Styles {
+    <link href="~/WebSite/css/jopform.css" rel="stylesheet" type="text/css" media="all">
+}
+
+
+<!-- Header -->
+<div class="caption-inner">
+    <div class="inner-bg" style="background: url('/WebSite/images/header2.jpg') no-repeat fixed center center; background-size: cover;"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a href="~/">@Localizer["Home"]</a></li>
+                    <li class="active">@Localizer["Supplier Registration"]</li>
+                </ol>
+                <h3 class="fw-bold"><span>@Localizer["Supplier Registration"]</span></h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="content-inner">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div class="row">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+                    }
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                    }
+
+                    <form id="suppliersForm" asp-action="Apply" method="post" enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
+
+                        <!-- Company Information Section -->
+                        <div class="form-section mb-5">
+                            <h4 class="section-title mb-4">
+                                <i class="fas fa-building me-2"></i>@Localizer["Company Information"]
+                            </h4>
+                            <div class="section-content p-4 bg-light rounded">
+                                <div class="row">
+                                    <!-- User Type Dropdown -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="UserType" class="mb-2">@Localizer["User Type"]</label>
+                                            <select asp-for="UserType" class="form-control" data-placeholder="@Localizer["Select User Type"]">
+                                                <option value="Individual" selected>@Localizer["Individual"]</option>
+                                                <option value="Company">@Localizer["Company"]</option>
+                                            </select>
+                                            <span asp-validation-for="UserType" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Company Name -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="CompanyName" class="mb-2">@Localizer["Company Name"]<span class="text-danger">*</span></label>
+                                            <input asp-for="CompanyName" type="text" class="form-control" placeholder="@Localizer["Enter Company Name"]" />
+                                            <span asp-validation-for="CompanyName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Company Sector Dropdown -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="CompanySector" class="mb-2">@Localizer["Company Sector"]</label>
+                                            <select asp-for="CompanySector" class="form-control" data-placeholder="@Localizer["Select Company Sector"]">
+                                                <option value="Public" selected>@Localizer["Public"]</option>
+                                                <option value="Private">@Localizer["Private"]</option>
+                                            </select>
+                                            <span asp-validation-for="CompanySector" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Registration Number (Only visible when Company is selected) -->
+                                    <div class="col-md-4" id="registrationNumberContainer" style="display: none;">
+                                        <div class="form-group">
+                                            <label asp-for="RegistrationNumber" class="mb-2">@Localizer["Registration Number"]</label>
+                                            <input asp-for="RegistrationNumber" type="text" class="form-control" placeholder="@Localizer["Enter Registration Number"]" />
+                                            <span asp-validation-for="RegistrationNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Phone Number -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="PhoneNumber" class="mb-2">@Localizer["Phone Number"]<span class="text-danger">*</span></label>
+                                            <input asp-for="PhoneNumber" type="tel" class="form-control" placeholder="@Localizer["Enter Phone Number"]" />
+                                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Email Address -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="EmailAddress" class="mb-2">@Localizer["Email Address"]<span class="text-danger">*</span></label>
+                                            <input asp-for="EmailAddress" type="email" class="form-control" placeholder="@Localizer["Enter Email Address"]" />
+                                            <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Fax Number -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="FaxNumber" class="mb-2">@Localizer["Fax Number"]</label>
+                                            <input asp-for="FaxNumber" type="tel" class="form-control" placeholder="@Localizer["Enter Fax Number"]" />
+                                            <span asp-validation-for="FaxNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Website URL -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="WebsiteUrl" class="mb-2">@Localizer["Website URL"]</label>
+                                            <input asp-for="WebsiteUrl" type="url" class="form-control" placeholder="@Localizer["Enter Website URL"]" />
+                                            <span asp-validation-for="WebsiteUrl" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Address -->
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label asp-for="Address" class="mb-2">@Localizer["Address"]</label>
+                                            <textarea asp-for="Address" class="form-control" placeholder="@Localizer["Enter Address"]" rows="3"></textarea>
+                                            <span asp-validation-for="Address" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Materials Section -->
+                        <div class="form-section mb-5">
+                            <h4 class="section-title mb-4">
+                                <i class="fas fa-box me-2"></i>@Localizer["Materials"]
+                            </h4>
+                            <div class="section-content p-4 bg-light rounded">
+                                <!-- Search Box for Materials -->
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" id="materialsSearchInput" class="form-control" placeholder="@Localizer["Search Materials"]" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Materials Checkboxes -->
+                                <div class="row" id="materialsContainer">
+                                    @if (Model.Materials != null && Model.Materials.Count > 0)
+                                    {
+                                        @for (int i = 0; i < Model.Materials.Count; i++)
+                                        {
+                                            var material = Model.Materials[i];
+                                            <div class="col-md-6 col-lg-4 material-item mb-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input material-checkbox" type="checkbox" 
+                                                           name="Materials[@i].IsSelected" 
+                                                           value="true"
+                                                           id="material_@material.Id"
+                                                           data-material-name="@material.Name" 
+                                                           asp-for="Materials[@i].IsSelected" />
+                                                    <input type="hidden" name="Materials[@i].Id" value="@material.Id" />
+                                                    <input type="hidden" name="Materials[@i].Name" value="@material.Name" />
+                                                    <label class="form-check-label material-label" for="material_@material.Id">
+                                                        @material.Name
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-12">
+                                            <p class="text-muted">@Localizer["No materials available"]</p>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Document Upload Section -->
+                        <div class="form-section mb-5">
+                            <h4 class="section-title mb-4">
+                                <i class="fas fa-file-upload me-2"></i>@Localizer["Documents"]
+                            </h4>
+                            <div class="section-content p-4 bg-light rounded">
+                                <div class="row">
+                                    <!-- Commercial Register (Required) -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="CommercialRegister" class="mb-2">@Localizer["Commercial Register"]<span class="text-danger">*</span></label>
+                                            <input asp-for="CommercialRegister" type="file" class="form-control" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
+                                            <small class="form-text text-muted">@Localizer["Accepted formats: PDF, DOC, DOCX, JPG, PNG"]</small>
+                                            <span asp-validation-for="CommercialRegister" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Professional License -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="ProfessionalLicense" class="mb-2">@Localizer["Professional License"]</label>
+                                            <input asp-for="ProfessionalLicense" type="file" class="form-control" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
+                                            <small class="form-text text-muted">@Localizer["Accepted formats: PDF, DOC, DOCX, JPG, PNG"]</small>
+                                            <span asp-validation-for="ProfessionalLicense" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- List of Key Achievements -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="ListOfKeyAchievements" class="mb-2">@Localizer["List of Key Achievements"]</label>
+                                            <input asp-for="ListOfKeyAchievements" type="file" class="form-control" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
+                                            <small class="form-text text-muted">@Localizer["Accepted formats: PDF, DOC, DOCX, JPG, PNG"]</small>
+                                            <span asp-validation-for="ListOfKeyAchievements" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- List of Major Clients -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="ListOfMajorClients" class="mb-2">@Localizer["List of Major Clients"]</label>
+                                            <input asp-for="ListOfMajorClients" type="file" class="form-control" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
+                                            <small class="form-text text-muted">@Localizer["Accepted formats: PDF, DOC, DOCX, JPG, PNG"]</small>
+                                            <span asp-validation-for="ListOfMajorClients" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Copy of Registration Certificate -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="CopyOfRegistrationCertificate" class="mb-2">@Localizer["Copy of Registration Certificate"]</label>
+                                            <input asp-for="CopyOfRegistrationCertificate" type="file" class="form-control" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
+                                            <small class="form-text text-muted">@Localizer["Accepted formats: PDF, DOC, DOCX, JPG, PNG"]</small>
+                                            <span asp-validation-for="CopyOfRegistrationCertificate" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center mt-5">
+                            <button type="submit" class="btn-header green-button btn-more px-5 py-3">
+                                <i class="fas fa-paper-plane me-2"></i>@Localizer["Submit Application"]
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/WebSite/js/suppliersForm.js"></script>
+}

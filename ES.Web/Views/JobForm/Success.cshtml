@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Job Application Submitted"];
+    var msg = TempData["SuccessMessage"] ?? "تم إرسال طلب التوظيف بنجاح!";
+}
+
+<div class="caption-inner">
+    <div class="inner-bg" style="background: url('/WebSite/images/header2.jpg') no-repeat fixed center center; background-size: cover;"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a href="~/">@Localizer["Home"]</a></li>
+                    <li class="active">@Localizer["Job Application Submitted"]</li>
+                </ol>
+                <h3 class="fw-bold">
+                    <span>@Localizer["Job Application Submitted"]</span>
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content-inner">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+
+                <div class="alert alert-success text-center" style="font-size: 20px; padding: 25px;">
+                    <i class="fa fa-check-circle fa-2x mb-3" style="color: green;"></i><br />
+                    @msg
+                </div>
+
+             @*    <div class="text-center mt-4">
+                    <a href="~/" class="btn btn-primary btn-lg">
+                        @Localizer["Go to Home"]
+                    </a>
+                </div> *@
+
+            </div>
+
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+</div>

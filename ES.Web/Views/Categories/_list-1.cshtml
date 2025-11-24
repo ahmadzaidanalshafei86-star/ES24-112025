@@ -1,0 +1,26 @@
+﻿@model IEnumerable<PageViewModel>
+
+<div class="col-md-4">
+    <div class="list-group">
+        @foreach (var Page in Model)
+        {
+            <div type="button" class="list-group-item">
+                <i class="fa fa-angle-@(System.Globalization.CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? "left" : "right") arrow-icon"
+                   aria-hidden="true"></i>
+                <a href="javascript:void(0);"
+                   class="scroll-link"
+                   data-target="link-@Page.Slug">@Page.Title</a>
+            </div>
+        }
+    </div>
+</div>
+<div class="col-md-8">
+    @foreach (var Page in Model)
+    {
+        <div class="resizable content-section" id="link-@Page.Slug" tabindex="-1" style="display: none;">
+            <div class="title margin-top">@Page.Title</div>
+            @Html.Raw(Page.LongDescription)
+            <hr />
+        </div>
+    }
+</div>

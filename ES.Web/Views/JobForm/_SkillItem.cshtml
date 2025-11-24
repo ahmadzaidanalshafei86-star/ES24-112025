@@ -1,0 +1,31 @@
+﻿@model EmployeeSkill
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    var index = ViewData["Index"];
+}
+
+<div class="item-row mb-3 p-3 border rounded" data-index="@index">
+    <div class="row">
+        <div class="col-md-8">
+            <label>@Localizer["Skill Description"]</label>
+            <input type="text" name="Skills[@index].SkillDescription" value="@Model.SkillDescription" class="form-control" required />
+        </div>
+        <div class="col-md-3">
+            <label>@Localizer["Skill Level"]</label>
+            <select name="Skills[@index].SkillLevel" class="form-control" required>
+                <option value="">@Localizer["Select"]</option>
+                <option value="1" selected="@(Model.SkillLevel == 1)">@Localizer["Basic"]</option>
+                <option value="2" selected="@(Model.SkillLevel == 2)">@Localizer["Intermediate"]</option>
+                <option value="3" selected="@(Model.SkillLevel == 3)">@Localizer["Advanced"]</option>
+            </select>
+        </div>
+        <div class="col-md-1 d-flex align-items-end">
+            <button type="button" class="btn btn-danger btn-sm remove-item">
+                <i class="fa fa-trash"></i>
+            </button>
+        </div>
+    </div>
+</div>

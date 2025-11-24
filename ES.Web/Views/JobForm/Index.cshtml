@@ -1,0 +1,602 @@
+﻿@model JobFormViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+@section Styles {
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="~/WebSite/css/jopform.css" rel="stylesheet" type="text/css" media="all">
+}
+
+<!-- Page Header -->
+<div class="caption-inner">
+    <div class="inner-bg" style="background: url('/WebSite/images/header2.jpg') no-repeat fixed center center; background-size: cover;"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a href="~/">@Localizer["Home"]</a></li>
+                    <li class="active">@Localizer["Apply for job"]</li>
+                </ol>
+                <h3 class="fw-bold"><span>@Model.DeclerationName</span></h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content-inner">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1"></div>
+
+            <div class="col-md-10">
+                <div class="row">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+                    }
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                    }
+                    <form id="employeeForm" asp-action="Apply" method="post" enctype="multipart/form-data" autocomplete="off">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="@Model.DeclerationId"/>
+
+                        <!-- Personal Information Section -->
+                        <div class="form-section mb-5">
+                            <h4 class="section-title mb-4">
+                                <i class="fas fa-user me-2"></i>@Localizer["Personal Information"]
+                            </h4>
+                            <div class="section-content p-4 bg-light rounded">
+                                <!-- National Number -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["National Number"]</label>
+                                            <input type="text"
+                                                   asp-for="@Model.NationalNumber"
+                                                   class="form-control"
+                                                   placeholder="@Localizer["Your national number"]" />
+                                            <span asp-validation-for="NationalNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- English Names -->
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <h6 class="text-muted mb-3">@Localizer["Full Name (English)"]</h6>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["First Name"]</label>
+                                            <input type="text" asp-for="FirstNameEn" class="form-control" placeholder="First Name" autocomplete="off" />
+                                            <span asp-validation-for="FirstNameEn" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Second Name"]</label>
+                                            <input type="text" asp-for="SecondNameEn" class="form-control" placeholder="Second Name" />
+                                            <span asp-validation-for="SecondNameEn" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Third Name"]</label>
+                                            <input type="text" asp-for="ThirdNameEn" class="form-control" placeholder="Third Name" />
+                                            <span asp-validation-for="ThirdNameEn" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Fourth Name"]</label>
+                                            <input type="text" asp-for="FourthNameEn" class="form-control" placeholder="Fourth Name" />
+                                            <span asp-validation-for="FourthNameEn" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Arabic Names -->
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <h6 class="text-muted mb-3">@Localizer["Full Name (Arabic)"]</h6>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["First Name"]</label>
+                                            <input type="text" asp-for="FirstNameAr" class="form-control" placeholder="الاسم الأول" />
+                                            <span asp-validation-for="FirstNameAr" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Second Name"]</label>
+                                            <input type="text" asp-for="SecondNameAr" class="form-control" placeholder="الاسم الثاني" />
+                                            <span asp-validation-for="SecondNameAr" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Third Name"]</label>
+                                            <input type="text" asp-for="ThirdNameAr" class="form-control" placeholder="الاسم الثالث" />
+                                            <span asp-validation-for="ThirdNameAr" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Fourth Name"]</label>
+                                            <input type="text" asp-for="FourthNameAr" class="form-control" placeholder="الاسم الرابع" />
+                                            <span asp-validation-for="FourthNameAr" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Personal Details -->
+                                <div class="row mt-4">
+                                    <div class="col-12">
+                                        <h6 class="text-muted mb-3">@Localizer["Personal Details"]</h6>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Gender"]</label>
+                                            <select asp-for="GenderId"
+                                                    class="form-control select2-dropdown"
+                                                    data-placeholder="@Localizer["Select Gender"]">
+                                                <option value=""></option>
+                                                <option value="1">@Localizer["Male"]</option>
+                                                <option value="2">@Localizer["Female"]</option>
+                                            </select>
+                                            <span asp-validation-for="GenderId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Date of Birth"]</label>
+                                            <input type="date"
+                                                   asp-for="DateOfBirth"
+                                                   class="form-control"
+                                                   placeholder="@Localizer["Select Date of Birth"]" />
+                                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Religion"]</label>
+                                            <select asp-for="ReligionId"
+                                                    class="form-control select2-dropdown"
+                                                    data-placeholder="@Localizer["Select Religion"]">
+                                                <option value=""></option>
+                                                <option value="1">@Localizer["Muslim"]</option>
+                                                <option value="2">@Localizer["Christian"]</option>
+                                            </select>
+                                            <span asp-validation-for="ReligionId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Marital Status"]</label>
+                                            <select asp-for="SelectedMaritalStatusId"
+                                                    asp-items="Model.MaritalStatuses"
+                                                    class="form-control select2-dropdown"
+                                                    data-placeholder="@Localizer["Select Marital Status"]">
+                                                <option value=""></option>
+                                            </select>
+                                            <span asp-validation-for="SelectedMaritalStatusId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Blood Type"]</label>
+                                            <select asp-for="SelectedBloodTypeId"
+                                                    asp-items="Model.BloodTypes"
+                                                    class="form-control select2-dropdown"
+                                                    data-placeholder="@Localizer["Select Blood Type"]">
+                                                <option value=""></option>
+                                            </select>
+                                            <span asp-validation-for="SelectedBloodTypeId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nationality & Place of Birth Section -->
+                        <div class="form-section mb-5">
+                            <h4 class="section-title mb-4">
+                                <i class="fas fa-globe me-2"></i>@Localizer["Nationality & Place of Birth"]
+                            </h4>
+                            <div class="section-content p-4 bg-light rounded">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Nationality"]</label>
+                                            <select asp-for="SelectedNationalityId"
+                                                    asp-items="Model.Countries"
+                                                    class="form-control select2-dropdown"
+                                                    data-placeholder="@Localizer["Select Nationality"]">
+                                                <option value=""></option>
+                                            </select>
+                                            <span asp-validation-for="SelectedNationalityId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Place of birth"]</label>
+                                            <select asp-for="PlaceOfBirthId"
+                                                    asp-items="Model.Countries"
+                                                    class="form-control select2-dropdown"
+                                                    data-placeholder="@Localizer["Select Country"]"
+                                                    id="PlaceOfBirthId">
+                                                <option value=""></option>
+                                            </select>
+                                            <span asp-validation-for="PlaceOfBirthId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" id="stateContainer" style="display: none;">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["State"]</label>
+                                            <select asp-for="SelectedStateId"
+                                                    asp-items="Model.States"
+                                                    class="form-control select2-dropdown"
+                                                    data-placeholder="@Localizer["Select State"]"
+                                                    id="SelectedStateId">
+                                                <option value=""></option>
+                                            </select>
+                                            <span asp-validation-for="SelectedStateId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4" id="cityContainer" style="display: none;">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["City"]</label>
+                                            <select asp-for="SelectedCityId"
+                                                    asp-items="Model.Cities"
+                                                    class="form-control select2-dropdown"
+                                                    data-placeholder="@Localizer["Select City"]"
+                                                    id="SelectedCityId">
+                                                <option value=""></option>
+                                            </select>
+                                            <span asp-validation-for="SelectedCityId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Information Section -->
+                        <div class="form-section mb-5">
+                            <h4 class="section-title mb-4">
+                                <i class="fas fa-phone me-2"></i>@Localizer["Contact Information"]
+                            </h4>
+                            <div class="section-content p-4 bg-light rounded">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Email"]</label>
+                                            <input type="text"
+                                                   asp-for="Email"
+                                                   class="form-control"
+                                                   placeholder="your.email@example.com" />
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Mobile"]</label>
+                                            <input type="text"
+                                                   asp-for="MobileNumber"
+                                                   class="form-control"
+                                                   placeholder="@Localizer["Phone_Placeholder_Mobile"]" />
+                                            <span asp-validation-for="MobileNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Telephone number"]</label>
+                                            <input type="text"
+                                                   asp-for="TelephoneNumber"
+                                                   class="form-control"
+                                                   placeholder="@Localizer["Phone_Placeholder_Telephone"]" />
+                                            <span asp-validation-for="TelephoneNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Po_Box"]</label>
+                                            <input type="text"
+                                                   asp-for="PoBox"
+                                                   class="form-control"
+                                                   placeholder="@Localizer["P.O. Box Number"]" />
+                                            <span asp-validation-for="PoBox" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Address Section -->
+                        <div class="form-section mb-5">
+                            <h4 class="section-title mb-4">
+                                <i class="fas fa-map-marker-alt me-2"></i>@Localizer["Residential Address"]
+                            </h4>
+                            <div class="section-content p-4 bg-light rounded">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Country"]</label>
+                                            <select asp-for="AddressCountryId"
+                                                    asp-items="Model.Countries"
+                                                    class="form-control select2-dropdown"
+                                                    data-placeholder="@Localizer["Select Country"]"
+                                                    id="AddressCountryId">
+                                                <option value=""></option>
+                                            </select>
+                                            <span asp-validation-for="AddressCountryId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" id="addressStateContainer" style="display: none;">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["State"]</label>
+                                            <select asp-for="AddressStateId"
+                                                    asp-items="Model.States"
+                                                    class="form-control select2-dropdown"
+                                                    data-placeholder="@Localizer["Select State"]">
+                                                <option value=""></option>
+                                            </select>
+                                            <span asp-validation-for="AddressStateId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" id="addressCityContainer" style="display: none;">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["City"]</label>
+                                            <select asp-for="AddressCityId"
+                                                    asp-items="Model.Cities"
+                                                    class="form-control select2-dropdown"
+                                                    data-placeholder="@Localizer["Select City"]">
+                                                <option value=""></option>
+                                            </select>
+                                            <span asp-validation-for="AddressCityId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Street Address"]</label>
+                                            <input type="text"
+                                                   asp-for="AddressText"
+                                                   class="form-control"
+                                                   placeholder="@Localizer["Building name, Street, Area"]" />
+                                            <span asp-validation-for="AddressText" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Education Section -->
+                        <div class="form-section mb-5">
+                            <h4 class="section-title mb-4">
+                                <i class="fas fa-graduation-cap me-2"></i>@Localizer["Educational Background"]
+                            </h4>
+                            <div class="section-content p-4 bg-light rounded">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Education degree"]</label>
+                                            <select asp-for="SelectedEducationDegreeId"
+                                                    asp-items="Model.EducationDegrees"
+                                                    class="form-control select2-dropdown"
+                                                    data-placeholder="@Localizer["Select Education degree"]">
+                                                <option value=""></option>
+                                            </select>
+                                            <span asp-validation-for="SelectedEducationDegreeId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Specialization"]</label>
+                                            <select asp-for="SelectedSpecializationId"
+                                                    asp-items="Model.Specializations"
+                                                    class="form-control select2-dropdown"
+                                                    data-placeholder="@Localizer["Select Specialization"]">
+                                                <option value=""></option>
+                                            </select>
+                                            <span asp-validation-for="SelectedSpecializationId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["University Country"]</label>
+                                            <select id="UniversityCountryId"
+                                                    asp-for="UniversityCountryId"
+                                                    asp-items="Model.Countries"
+                                                    class="form-control select2-dropdown"
+                                                    data-placeholder="@Localizer["Select Country"]">
+                                                <option value=""></option>
+                                            </select>
+                                            <span asp-validation-for="UniversityCountryId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["University"]</label>
+                                            <select id="SelectedUniversityId"
+                                                    asp-for="SelectedUniversityId"
+                                                    class="form-control select2-dropdown"
+                                                    data-placeholder="@Localizer["Select University"]">
+                                                <option value=""></option>
+                                            </select>
+                                            <span asp-validation-for="SelectedUniversityId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="mb-2">@Localizer["Years of Study"]</label>
+                                            <select asp-for="SelectedYearsOfStudyId"
+                                                    asp-items="Model.YearsOfStudy"
+                                                    class="form-control select2-dropdown"
+                                                    data-placeholder="@Localizer["Select Years of Study"]">
+                                                <option value=""></option>
+                                            </select>
+                                            <span asp-validation-for="SelectedYearsOfStudyId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Languages Section -->
+                        <div class="form-section mb-5">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                              <h4 class="section-title mb-4">
+                                    <i class="fas fa-language me-2"></i>@Localizer["Employee Languages"]
+                               </h4>
+                                <button type="button" class="btn btn-sm btn-primary add-item" data-section="language">
+                                    <i class="fa fa-plus"></i> @Localizer["Add"]
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div id="languages-container">
+                                    @if (Model.Languages != null && Model.Languages.Any())
+                                    {
+                                        for (int i = 0; i < Model.Languages.Count; i++)
+                                        {
+                                            <partial name="_LanguageItem" model="Model.Languages[i]" view-data="@(new ViewDataDictionary(ViewData) { { "Index", i } })" />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <partial name="_LanguageItem" model="new EmployeeLanguage()" view-data="@(new ViewDataDictionary(ViewData) { { "Index", 0 } })" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Work History Section -->
+                        <div class="form-section mb-5">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h4 class="section-title mb-4">
+                                    <i class="fas fa-briefcase me-2"></i>@Localizer["Employee Work History"]
+                                </h4>
+                                <button type="button" class="btn btn-sm btn-primary add-item" data-section="workhistory">
+                                    <i class="fa fa-plus"></i> @Localizer["Add"]
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div id="workhistory-container">
+                                    @if (Model.WorkHistory != null && Model.WorkHistory.Any())
+                                    {
+                                        for (int i = 0; i < Model.WorkHistory.Count; i++)
+                                        {
+                                            <partial name="_WorkHistoryItem" model="Model.WorkHistory[i]" view-data="@(new ViewDataDictionary(ViewData) { { "Index", i } })" />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <partial name="_WorkHistoryItem" model="new EmployeeWorkHistory()" view-data="@(new ViewDataDictionary(ViewData) { { "Index", 0 } })" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Skills Section -->
+                        <div class="form-section mb-5">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h4 class="section-title mb-4">
+                                    <i class="fas fa-cogs me-2"></i>@Localizer["Employee Skills"]
+                                </h4>
+                                <button type="button" class="btn btn-sm btn-primary add-item" data-section="skill">
+                                    <i class="fa fa-plus"></i> @Localizer["Add"]
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div id="skills-container">
+                                    @if (Model.Skills != null && Model.Skills.Any())
+                                    {
+                                        for (int i = 0; i < Model.Skills.Count; i++)
+                                        {
+                                            <partial name="_SkillItem" model="Model.Skills[i]" view-data="@(new ViewDataDictionary(ViewData) { { "Index", i } })" />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <partial name="_SkillItem" model="new EmployeeSkill()" view-data="@(new ViewDataDictionary(ViewData) { { "Index", 0 } })" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Attachments Section -->
+                        <div class="form-section mb-5">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h4 class="section-title mb-4">
+                                    <i class="fas fa-paperclip me-2"></i>@Localizer["Attachments"]
+                                </h4>
+                                <button type="button" class="btn btn-sm btn-primary" id="add-attachment">
+                                    <i class="fa fa-plus"></i> @Localizer["Add"]
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div id="attachments-container">
+                                    <div class="attachment-row mb-3">
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <input type="file" name="AttachmentFiles" class="form-control" />
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="button" class="btn btn-danger btn-sm remove-attachment" disabled>
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center mt-5">
+                            <button type="submit" class="btn-header green-button btn-more px-5 py-3">
+                                <i class="fas fa-paper-plane me-2"></i>@Localizer["Submit Application"]
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Templates (Hidden) -->
+                <div id="templates" style="display: none;">
+                    <div id="language-template">
+                        <partial name="_LanguageItem" model="new EmployeeLanguage()" view-data="@(new ViewDataDictionary(ViewData) { { "Index", -1 } })" />
+                    </div>
+                    <div id="workhistory-template">
+                        <partial name="_WorkHistoryItem" model="new EmployeeWorkHistory()" view-data="@(new ViewDataDictionary(ViewData) { { "Index", -1 } })" />
+                    </div>
+                    <div id="skill-template">
+                        <partial name="_SkillItem" model="new EmployeeSkill()" view-data="@(new ViewDataDictionary(ViewData) { { "Index", -1 } })" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="~/WebSite/js/JopForm.js"></script>
+}
