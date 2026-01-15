@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = Localizer["Job Application Submitted"];
-    var msg = TempData["SuccessMessage"] ?? "تم إرسال طلب التوظيف بنجاح!";
+    var msg = TempData["SuccessMessage"] ?? Localizer["Your job application has been successfully submitted!"]; ;
 }
 
 <div class="caption-inner">
@@ -35,11 +35,11 @@
                     @msg
                 </div>
 
-             @*    <div class="text-center mt-4">
+                <div class="text-center mt-4">
                     <a href="~/" class="btn btn-primary btn-lg">
                         @Localizer["Go to Home"]
                     </a>
-                </div> *@
+                </div>
 
             </div>
 

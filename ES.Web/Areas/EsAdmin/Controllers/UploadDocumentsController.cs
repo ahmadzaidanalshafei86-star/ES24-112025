@@ -19,21 +19,45 @@ namespace ES.Web.Controllers
         }
 
         [Authorize(Permissions.Documents.Read)]
+        //public IActionResult Index()
+        //{
+        //    IEnumerable<DocumentsViewModel> documents = _documentsRepository
+        //       .GetAllDocumentsAsync()
+        //       .Result
+        //       .Select(d => new DocumentsViewModel
+        //       {
+        //           Id = d.Id,
+        //           DocumentName = d.OriginalName,
+        //           DocumentURL = d.FullUrl
+        //       });
+        //    return View(documents);
+        //}
+
         public IActionResult Index()
         {
+            var baseUrl = $"{Request.Scheme}://{Request.Host}";
+
             IEnumerable<DocumentsViewModel> documents = _documentsRepository
-               .GetAllDocumentsAsync()
-               .Result
-               .Select(d => new DocumentsViewModel
-               {
-                   Id = d.Id,
-                   DocumentName = d.OriginalName,
-                   DocumentURL = d.FullUrl
-               });
+                .GetAllDocumentsAsync()
+                .Result
+                .Select(d => new DocumentsViewModel
+                {
+                    Id = d.Id,
+                    DocumentName = d.OriginalName,
+                    DocumentURL = ReplaceDomain(d.FullUrl, baseUrl)
+                });
+
             return View(documents);
         }
 
+        private string ReplaceDomain(string fullUrl, string baseUrl)
+        {
+            if (string.IsNullOrEmpty(fullUrl))
+                return fullUrl;
 
+            var uri = new Uri(fullUrl);
+            return baseUrl + uri.PathAndQuery;
+        }
         [HttpPost]
         public async Task<IActionResult> Upload(List<IFormFile> documents)
         {

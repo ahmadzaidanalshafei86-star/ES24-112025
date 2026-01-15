@@ -1,0 +1,367 @@
+﻿@model RighttoobtaininformationRequestsViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+@inject IViewLocalizer Localizer
+
+@section Styles {
+    <link href="~/CMS/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="~/CMS/css/translationindex.css" rel="stylesheet" />
+}
+
+
+
+<div class="card">
+    <div class="card-body">
+
+
+<div class="col-md-12">
+
+    <h3 class="mb-4">@Localizer["Request Details"]</h3>
+
+    <div class="form-section mb-5">
+        <div class="section-content p-4 bg-light rounded">
+
+            <!-- Applicant Category -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label>@Localizer["Category of the applicant"]</label>
+                    <p class="form-control-plaintext">
+                        @(Model.ApplicantCategory == "LegalPerson"
+                            ? Localizer["Legal person"]
+                            : Localizer["Normal person"])
+                    </p>
+                </div>
+            </div>
+
+            <!-- Private Sector Data -->
+            @if (Model.ApplicantCategory == "LegalPerson")
+            {
+                <hr />
+                <div id="PrivateSectorData">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>@Localizer["Company name"]</label>
+                            <p class="form-control-plaintext">@Model.CompanyName</p>
+                        </div>
+                        <div class="col-md-4">
+                            <label>@Localizer["Authorization book number"]</label>
+                            <p class="form-control-plaintext">@Model.AuthorizationBookNumber</p>
+                        </div>
+                        <div class="col-md-4">
+                            <label>@Localizer["Commercial Registration No"]</label>
+                            <p class="form-control-plaintext">@Model.CommercialRegistrationNo</p>
+                        </div>
+                        <div class="col-md-4">
+                            <label>@Localizer["Authorization letter date"]</label>
+                            <p class="form-control-plaintext">@Model.AuthorizationLetterDate?.ToString("yyyy-MM-dd")</p>
+                        </div>
+                        <div class="col-md-4">
+                            <label>@Localizer["Delegate name"]</label>
+                            <p class="form-control-plaintext">@Model.DelegateName</p>
+                        </div>
+
+                                <!-- Letter Files -->
+                                <div class="col-md-12 mt-3">
+                                    <label>@Localizer["The letter of the concerned authority"]</label>
+
+                                    @{
+                                        var letterFiles = Model.Files.Where(f => f.FileType == "LetterFile").ToList();
+                                    }
+
+                                    @if (letterFiles.Any())
+                                    {
+                                        <table class="table table-bordered table-striped mt-2">
+                                            <thead>
+                                                <tr>
+                                                    <th>@Localizer["File Name"]</th>
+                                                    <th>@Localizer["Download"]</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var file in letterFiles)
+                                                {
+                                                    <tr>
+                                                        <td>@file.FileName</td>
+                                                        <td>
+                                                            <a href="@file.FileUrl" class="btn btn-sm btn-primary" target="_blank">
+                                                                @Localizer["Download"]
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-muted">—</p>
+                                    }
+                                </div>
+
+                    </div>
+                </div>
+            }
+
+            <!-- Personal Info -->
+            <hr />
+            <div class="row">
+                <div class="col-md-3">
+                    <label>@Localizer["Name"]</label>
+                    <p class="form-control-plaintext">@Model.Name</p>
+                </div>
+                <div class="col-md-3">
+                    <label>@Localizer["Name of the Father"]</label>
+                    <p class="form-control-plaintext">@Model.FatherName</p>
+                </div>
+                <div class="col-md-3">
+                    <label>@Localizer["Grandfather name"]</label>
+                    <p class="form-control-plaintext">@Model.GrandFatherName</p>
+                </div>
+                <div class="col-md-3">
+                    <label>@Localizer["Family name"]</label>
+                    <p class="form-control-plaintext">@Model.FamilyName</p>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label>@Localizer["National Number"]</label>
+                    <p class="form-control-plaintext">@Model.NationalNumber</p>
+                </div>
+                        <!-- Personal ID Files -->
+                        <div class="col-md-12 mt-3">
+                            <label>@Localizer["A copy of personal identification (valid)"]</label>
+
+                            @{
+                                var personalIdFiles = Model.Files.Where(f => f.FileType == "PersonalIdCopy").ToList();
+                            }
+
+                            @if (personalIdFiles.Any())
+                            {
+                                <table class="table table-bordered table-striped mt-2">
+                                    <thead>
+                                        <tr>
+                                            <th>@Localizer["File Name"]</th>
+                                            <th>@Localizer["Download"]</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var file in personalIdFiles)
+                                        {
+                                            <tr>
+                                                <td>@file.FileName</td>
+                                                <td>
+                                                    <a href="@file.FileUrl" class="btn btn-sm btn-primary" target="_blank">
+                                                        @Localizer["Download"]
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <p class="text-muted">—</p>
+                            }
+                        </div>
+            </div>
+
+            <!-- Residence -->
+            <hr />
+            <div class="row">
+                <div class="col-md-12"><label>@Localizer["Place of residence"]</label></div>
+                <div class="col-md-3">
+                    <label>@Localizer["Governorate"]</label>
+                    <p class="form-control-plaintext">@Model.ResidenceGovernorate</p>
+                </div>
+                <div class="col-md-3">
+                    <label>@Localizer["City"]</label>
+                    <p class="form-control-plaintext">@Model.ResidenceCity</p>
+                </div>
+                <div class="col-md-3">
+                    <label>@Localizer["District"]</label>
+                    <p class="form-control-plaintext">@Model.ResidenceDistrict</p>
+                </div>
+            </div>
+
+            <!-- Workplace -->
+            <div class="row mt-3">
+                <div class="col-md-12"><label>@Localizer["Workplace"]</label></div>
+                <div class="col-md-3">
+                    <label>@Localizer["Governorate"]</label>
+                    <p class="form-control-plaintext">@Model.WorkplaceGovernorate</p>
+                </div>
+                <div class="col-md-3">
+                    <label>@Localizer["City"]</label>
+                    <p class="form-control-plaintext">@Model.WorkplaceCity</p>
+                </div>
+                <div class="col-md-6">
+                    <label>@Localizer["Employer"]</label>
+                    <p class="form-control-plaintext">@Model.Employer</p>
+                </div>
+            </div>
+
+            <!-- Contact -->
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label>@Localizer["Cell phone number"]</label>
+                    <p class="form-control-plaintext">@Model.CellPhone</p>
+                </div>
+                <div class="col-md-6">
+                    <label>@Localizer["Landline phone number"]</label>
+                    <p class="form-control-plaintext">@Model.Landline</p>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label>@Localizer["Fax Number"]</label>
+                    <p class="form-control-plaintext">@Model.Fax</p>
+                </div>
+                <div class="col-md-6">
+                    <label>@Localizer["Post office box number and location"]</label>
+                    <p class="form-control-plaintext">@Model.POBox</p>
+                </div>
+            </div>
+
+            <div class="row mt-3 mb-4">
+                <div class="col-md-6">
+                    <label>@Localizer["E-mail"]</label>
+                    <p class="form-control-plaintext">@Model.Email</p>
+                </div>
+            </div>
+
+            <!-- Identification -->
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <label>@Localizer["Identification type"]</label>
+                    <p class="form-control-plaintext">
+                        @Localizer[Model.IdentificationType]
+                    </p>
+                </div>
+
+                @if (Model.IdentificationType == "Other")
+                {
+                    <div class="col-md-6">
+                        <label>@Localizer["Document name"]</label>
+                        <p class="form-control-plaintext">@Model.DocumentName</p>
+                    </div>
+                }
+            </div>
+
+            <!-- Purpose -->
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <label>@Localizer["The purpose of obtaining information"]</label>
+                    <p class="form-control-plaintext">@Localizer[Model.Purpose]</p>
+                </div>
+
+                @if (Model.Purpose == "Other")
+                {
+                    <div class="col-md-6">
+                        <label>@Localizer["Other purposes"]</label>
+                        <p class="form-control-plaintext">@Model.OtherPurpose</p>
+                    </div>
+                }
+            </div>
+
+
+            <!-- Delivery Method -->
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <label>@Localizer["Method of delivery of information to the requesting party"]</label>
+                    <p class="form-control-plaintext">@Localizer[Model.DeliveryMethod]</p>
+                </div>
+
+                @if (Model.DeliveryMethod == "Other")
+                {
+                    <div class="col-md-6">
+                        <label>@Localizer["Other ways"]</label>
+                        <p class="form-control-plaintext">@Model.OtherDelivery</p>
+                    </div>
+                }
+            </div>
+
+            <!-- Information Topic -->
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <label>@Localizer["Information topic"]</label>
+                    <p class="form-control-plaintext">@Model.InformationTopic</p>
+                </div>
+            </div>
+
+            <!-- Additional Documents -->
+            <div class="row mt-3">
+                        <!-- Additional Documents -->
+                        <div class="col-md-12 mt-3">
+                            <label>@Localizer["Additional documents"]</label>
+
+                            @{
+                                var additionalFiles = Model.Files.Where(f => f.FileType == "AdditionalDocuments").ToList();
+                            }
+
+                            @if (additionalFiles.Any())
+                            {
+                                <table class="table table-bordered table-striped mt-2">
+                                    <thead>
+                                        <tr>
+                                            <th>@Localizer["File Name"]</th>
+                                            <th>@Localizer["Download"]</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var file in additionalFiles)
+                                        {
+                                            <tr>
+                                                <td>@file.FileName</td>
+                                                <td>
+                                                    <a href="@file.FileUrl" class="btn btn-sm btn-primary" target="_blank">
+                                                        @Localizer["Download"]
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <p class="text-muted">—</p>
+                            }
+                        </div>
+            </div>
+
+            <hr />
+
+            <!-- Agreement -->
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <label>@Localizer["I agree"]</label>
+                    <p class="form-control-plaintext">
+                        @(Model.Agreement ? Localizer["Yes"] : Localizer["No"])
+                    </p>
+                </div>
+            </div>
+
+            <!-- Back Button -->
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="@Url.Action("Index")" class="btn btn-secondary">
+                        @Localizer["Back"]
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+    </div>
+</div>
+

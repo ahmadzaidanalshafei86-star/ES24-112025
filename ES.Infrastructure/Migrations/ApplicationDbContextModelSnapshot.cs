@@ -22,6 +22,48 @@ namespace ES.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AKM.Core.Entities.PurchaseOrderTranslate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MetaDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MetaKeywords")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PricesOffered")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PurchaseOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("PurchaseOrderId");
+
+                    b.ToTable("PurchaseOrderTranslates");
+                });
+
             modelBuilder.Entity("AKM.Core.Entities.TenderTranslate", b =>
                 {
                     b.Property<int>("Id")
@@ -148,6 +190,99 @@ namespace ES.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.BookServiceHangar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookServiceRequestId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HangarId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookServiceRequestId");
+
+                    b.ToTable("BookServiceHangars");
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.BookServiceRefrigator", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookServiceRequestId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("RefrigatorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookServiceRequestId");
+
+                    b.ToTable("BookServiceRefrigators");
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.BookServiceRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<string>("EmailAddress")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.ToTable("BookServiceRequests");
                 });
 
             modelBuilder.Entity("ES.Core.Entities.Branch", b =>
@@ -2150,6 +2285,179 @@ namespace ES.Infrastructure.Migrations
                     b.ToTable("ProductTranslates");
                 });
 
+            modelBuilder.Entity("ES.Core.Entities.PurchaseOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EnvelopeOpeningDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MetaDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MetaKeywords")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("MoveToArchive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Numberofparticipatingcompanies")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Publish")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PurchaseOrderImageAltName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PurchaseOrderImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasMaxLength(50)
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Thenumberofcompaniesreferredto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.ToTable("PurchaseOrders");
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.PurchaseOrderFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AltName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FileUrl")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("PurchaseOrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PurchaseOrderId");
+
+                    b.ToTable("PurchaseOrdersFiles");
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.PurchaseOrderInquiry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AttachmentUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InquiryText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PurchaseOrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PurchaseOrderInquiries");
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.PurchaseOrderMaterial", b =>
+                {
+                    b.Property<int>("PurchaseOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PurchaseOrderId", "MaterialId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.ToTable("PurchaseOrderMaterials");
+                });
+
             modelBuilder.Entity("ES.Core.Entities.Refrigator", b =>
                 {
                     b.Property<int>("Id")
@@ -2216,6 +2524,150 @@ namespace ES.Infrastructure.Migrations
                     b.HasIndex("RefrigatorId");
 
                     b.ToTable("RefrigatorsTranslate");
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.RighttoobtaininformationFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RequestId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UploadedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequestId");
+
+                    b.ToTable("RighttoobtaininformationFiles");
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.RighttoobtaininformationRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AdditionalDocumentsFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Agreement")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ApplicantCategory")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AuthorizationBookNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("AuthorizationLetterDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CellPhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CommercialRegistrationNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DelegateName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeliveryMethod")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Employer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FamilyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FatherName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FaxNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GrandFatherName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdentificationType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InformationPurpose")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InformationTopic")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LandlineNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LetterFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NationalNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OtherDeliveryMethod")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OtherDocumentName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OtherPurpose")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("POBox")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PersonalIDCopyFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResidenceCity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResidenceDistrict")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResidenceGovernorate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WorkplaceCity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WorkplaceGovernorate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RighttoobtaininformationRequests");
                 });
 
             modelBuilder.Entity("ES.Core.Entities.RowLevelPermission", b =>
@@ -2359,6 +2811,107 @@ namespace ES.Infrastructure.Migrations
                     b.ToTable("SocialMediaLinks");
                 });
 
+            modelBuilder.Entity("ES.Core.Entities.Supplier", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("CommercialRegisterPath")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("CompanySector")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("CopyOfRegistrationCertificatePath")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("FaxNumber")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ListOfKeyAchievementsPath")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ListOfMajorClientsPath")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ProfessionalLicensePath")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("RegistrationNumber")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UserType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("WebsiteUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Suppliers", (string)null);
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.SupplierMaterial", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SupplierId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaterialId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("SupplierMaterials");
+                });
+
             modelBuilder.Entity("ES.Core.Entities.Tender", b =>
                 {
                     b.Property<int>("Id")
@@ -2500,6 +3053,52 @@ namespace ES.Infrastructure.Migrations
                     b.HasIndex("TenderId");
 
                     b.ToTable("TendersFiles");
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.TenderInquiry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AttachmentUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("InquiryText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("TenderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenderId");
+
+                    b.ToTable("TenderInquiries", (string)null);
                 });
 
             modelBuilder.Entity("ES.Core.Entities.TenderMaterial", b =>
@@ -2736,6 +3335,25 @@ namespace ES.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("AKM.Core.Entities.PurchaseOrderTranslate", b =>
+                {
+                    b.HasOne("ES.Core.Entities.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ES.Core.Entities.PurchaseOrder", "PurchaseOrder")
+                        .WithMany("PurchaseOrderTranslates")
+                        .HasForeignKey("PurchaseOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Language");
+
+                    b.Navigation("PurchaseOrder");
+                });
+
             modelBuilder.Entity("AKM.Core.Entities.TenderTranslate", b =>
                 {
                     b.HasOne("ES.Core.Entities.Language", "Language")
@@ -2768,6 +3386,39 @@ namespace ES.Infrastructure.Migrations
                         .HasForeignKey("RelatedCategoriesId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.BookServiceHangar", b =>
+                {
+                    b.HasOne("ES.Core.Entities.BookServiceRequest", "BookServiceRequest")
+                        .WithMany("Hangars")
+                        .HasForeignKey("BookServiceRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BookServiceRequest");
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.BookServiceRefrigator", b =>
+                {
+                    b.HasOne("ES.Core.Entities.BookServiceRequest", "BookServiceRequest")
+                        .WithMany("Refrigators")
+                        .HasForeignKey("BookServiceRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BookServiceRequest");
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.BookServiceRequest", b =>
+                {
+                    b.HasOne("ES.Core.Entities.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
                 });
 
             modelBuilder.Entity("ES.Core.Entities.Branch", b =>
@@ -3567,6 +4218,53 @@ namespace ES.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("ES.Core.Entities.PurchaseOrder", b =>
+                {
+                    b.HasOne("ES.Core.Entities.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ES.Core.Entities.Material", "Material")
+                        .WithMany()
+                        .HasForeignKey("MaterialId");
+
+                    b.Navigation("Language");
+
+                    b.Navigation("Material");
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.PurchaseOrderFile", b =>
+                {
+                    b.HasOne("ES.Core.Entities.PurchaseOrder", "PurchaseOrder")
+                        .WithMany("PurchaseOrderFiles")
+                        .HasForeignKey("PurchaseOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PurchaseOrder");
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.PurchaseOrderMaterial", b =>
+                {
+                    b.HasOne("ES.Core.Entities.Material", "Material")
+                        .WithMany("PurchaseOrders")
+                        .HasForeignKey("MaterialId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ES.Core.Entities.PurchaseOrder", "PurchaseOrder")
+                        .WithMany("Materials")
+                        .HasForeignKey("PurchaseOrderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Material");
+
+                    b.Navigation("PurchaseOrder");
+                });
+
             modelBuilder.Entity("ES.Core.Entities.Refrigator", b =>
                 {
                     b.HasOne("ES.Core.Entities.Branch", "Branch")
@@ -3595,6 +4293,17 @@ namespace ES.Infrastructure.Migrations
                     b.Navigation("Refrigator");
                 });
 
+            modelBuilder.Entity("ES.Core.Entities.RighttoobtaininformationFile", b =>
+                {
+                    b.HasOne("ES.Core.Entities.RighttoobtaininformationRequest", "Request")
+                        .WithMany("RighttoobtaininformationFiles")
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Request");
+                });
+
             modelBuilder.Entity("ES.Core.Entities.RowLevelPermission", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "Role")
@@ -3604,6 +4313,25 @@ namespace ES.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.SupplierMaterial", b =>
+                {
+                    b.HasOne("ES.Core.Entities.Material", "Material")
+                        .WithMany()
+                        .HasForeignKey("MaterialId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ES.Core.Entities.Supplier", "Supplier")
+                        .WithMany("SupplierMaterials")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Material");
+
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("ES.Core.Entities.Tender", b =>
@@ -3632,6 +4360,15 @@ namespace ES.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Tender");
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.TenderInquiry", b =>
+                {
+                    b.HasOne("ES.Core.Entities.Tender", null)
+                        .WithMany()
+                        .HasForeignKey("TenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ES.Core.Entities.TenderMaterial", b =>
@@ -3713,6 +4450,13 @@ namespace ES.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.BookServiceRequest", b =>
+                {
+                    b.Navigation("Hangars");
+
+                    b.Navigation("Refrigators");
                 });
 
             modelBuilder.Entity("ES.Core.Entities.Branch", b =>
@@ -3797,6 +4541,8 @@ namespace ES.Infrastructure.Migrations
                 {
                     b.Navigation("MaterialsTranslates");
 
+                    b.Navigation("PurchaseOrders");
+
                     b.Navigation("Tenders");
                 });
 
@@ -3871,9 +4617,28 @@ namespace ES.Infrastructure.Migrations
                     b.Navigation("Translations");
                 });
 
+            modelBuilder.Entity("ES.Core.Entities.PurchaseOrder", b =>
+                {
+                    b.Navigation("Materials");
+
+                    b.Navigation("PurchaseOrderFiles");
+
+                    b.Navigation("PurchaseOrderTranslates");
+                });
+
             modelBuilder.Entity("ES.Core.Entities.Refrigator", b =>
                 {
                     b.Navigation("RefrigatorsTranslates");
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.RighttoobtaininformationRequest", b =>
+                {
+                    b.Navigation("RighttoobtaininformationFiles");
+                });
+
+            modelBuilder.Entity("ES.Core.Entities.Supplier", b =>
+                {
+                    b.Navigation("SupplierMaterials");
                 });
 
             modelBuilder.Entity("ES.Core.Entities.Tender", b =>

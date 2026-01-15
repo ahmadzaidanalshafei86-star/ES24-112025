@@ -19,5 +19,7 @@ namespace ES.Core.Entities
 
         // Tendeender materials (Many-to-Many)
         public ICollection<TenderMaterial> Tenders { get; set; } = new List<TenderMaterial>();
+
+        public ICollection<PurchaseOrderMaterial> PurchaseOrders { get; set; } = new List<PurchaseOrderMaterial>();
     }
 }

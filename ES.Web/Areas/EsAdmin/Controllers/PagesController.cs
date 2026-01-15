@@ -331,7 +331,7 @@ namespace ES.Web.Controllers
             {
                 // Delete old cover image if it exists
                 if (!string.IsNullOrEmpty(page.CoverImageUrl))
-                    _imageService.Delete($"/images/Categories/{page.CoverImageUrl}");
+                    _imageService.Delete($"/images/Pages/{page.CoverImageUrl}");
 
                 var CoverImageName = $"{page.Id}_coverImage{Path.GetExtension(model.CoverImage.FileName)}";
                 var (isUploaded, errorMessage) = await _imageService.UploadASync(model.CoverImage, CoverImageName, "/images/Pages");
@@ -360,7 +360,7 @@ namespace ES.Web.Controllers
             {
                 // Delete old featured image if it exists
                 if (!string.IsNullOrEmpty(page.FeatruedImageUrl))
-                    _imageService.Delete($"/images/Categories/{page.FeatruedImageUrl}");
+                    _imageService.Delete($"/images/Pages/{page.FeatruedImageUrl}");
 
                 var FeaturedImageName = $"{page.Id}_FeaturedImage{Path.GetExtension(model.FeaturedImage.FileName)}";
                 var (isUploaded, errorMessage) = await _imageService.UploadASync(model.FeaturedImage, FeaturedImageName, "/images/Pages");
@@ -473,6 +473,7 @@ namespace ES.Web.Controllers
             page.MetaDescription = model.MetaDescription;
             page.MetaKeywords = model.MetaKeywords;
             page.Order = model.Order;
+          
             page.IsPublished = model.IsPublished;
             page.GalleryStyle = model.GalleryStyle;
             page.Count = model.Count;

@@ -109,8 +109,17 @@
                 </li>
 
                 <!-- Content Management Section -->
-                <li>
+               @*  <li>
                     <a asp-controller="Categories" asp-action="Index">
+                        <div class="parent-icon">
+                            <ion-icon class="lni lni-layout"></ion-icon>
+                        </div>
+                        <div class="menu-title">@Localizer["Categories"]</div>
+                    </a>
+                </li> *@
+
+                <li>
+                    <a href="/EsAdmin/Categories">
                         <div class="parent-icon">
                             <ion-icon class="lni lni-layout"></ion-icon>
                         </div>
@@ -127,7 +136,7 @@
                 </li>
 
 
-                <li >
+              @*   <li >
                     <a asp-controller="Materials" asp-action="Index">
                         <div class="parent-icon">
                             <ion-icon class="lni lni-layout"></ion-icon>
@@ -143,6 +152,32 @@
                         </div>
                         <div class="menu-title">@Localizer["Tenders"]</div>
                     </a>
+                </li> *@
+
+             @*    <li>
+                    <a asp-controller="Inquiry" asp-action="Index">
+                        <div class="parent-icon">
+                            <ion-icon class="lni lni-layout"></ion-icon>
+                        </div>
+                        <div class="menu-title">@Localizer["Tenders Inquiry"]</div>
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-controller="PurchaseOrders" asp-action="Index">
+                        <div class="parent-icon">
+                            <ion-icon class="lni lni-layout"></ion-icon>
+                        </div>
+                        <div class="menu-title">@Localizer["Purchase Orders"]</div>
+                    </a>
+                </li> *@
+               @*  <li>
+                    <a asp-controller="PurchaseOrderInquiry" asp-action="Index">
+                        <div class="parent-icon">
+                            <ion-icon class="lni lni-layout"></ion-icon>
+                        </div>
+                        <div class="menu-title">@Localizer["PurchaseOrders Inquiry"]</div>
+                    </a>
                 </li>
 
                 <li>
@@ -153,14 +188,32 @@
                         <div class="menu-title">@Localizer["Branches"]</div>
                     </a>
                 </li>
+
                 <li>
+                    <a asp-controller="BookService" asp-action="Index">
+                        <div class="parent-icon">
+                            <ion-icon class="lni lni-layout"></ion-icon>
+                        </div>
+                        <div class="menu-title">@Localizer["Book Service"]</div>
+                    </a>
+                </li> *@
+
+              @*   <li>
+                    <a asp-controller="RighttoobtaininformationRequests" asp-action="Index">
+                        <div class="parent-icon">
+                            <ion-icon class="lni lni-layout"></ion-icon>
+                        </div>
+                        <div class="menu-title">@Localizer["Right to obtain information"]</div>
+                    </a>
+                </li> *@
+               @*  <li>
                     <a asp-controller="NewsLetter" asp-action="Index">
                         <div class="parent-icon">
                             <ion-icon class="lni lni-envelope"></ion-icon>
                         </div>
                         <div class="menu-title">@Localizer["News Letter Subscriptions"]</div>
                     </a>
-                </li>
+                </li> *@
 
                 <li>
                     <a asp-controller="MenuManager" asp-action="Index">
@@ -198,14 +251,14 @@
                     </a>
                 </li>
 
-                <li>
+              @*   <li>
                     <a asp-controller="Languages" asp-action="SetDefaultDbLanguage">
                         <div class="parent-icon">
                             <ion-icon class="lni lni-world"></ion-icon>
                         </div>
                         <div class="menu-title">@Localizer["Language settings"]</div>
                     </a>
-                </li>
+                </li> *@
                 <li>
                     <a asp-controller="Smtp" asp-action="Index">
                         <div class="parent-icon">
@@ -262,14 +315,14 @@
                         </li>
                     </ul>
                 </li>
-            <li>
+          @*   <li>
                 <a asp-controller="Null" asp-action="Index">
                     <div class="parent-icon">
                         <ion-icon class="lni lni-plus"></ion-icon>
                     </div>
                     <div class="menu-title">@Localizer["Extensions"]</div>
                 </a>
-            </li>
+            </li> *@
 
             </ul>
             <!-- End Navigation -->

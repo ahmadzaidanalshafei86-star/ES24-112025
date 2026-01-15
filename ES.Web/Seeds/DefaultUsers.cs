@@ -15,7 +15,7 @@
             var user = await userManager.FindByNameAsync(admin.UserName);
             if (user is null)
             {
-                await userManager.CreateAsync(admin, "Akm&mk2050ak");
+                await userManager.CreateAsync(admin, "Gv4!qL8&tN3%xK6");
                 await userManager.AddToRoleAsync(admin, AppRoles.SuperAdmin);
             }
 
@@ -44,6 +44,8 @@
             await roleManager.AddPermissionsClaims(superAdminRole, "Tenders");
 
             await roleManager.AddPermissionsClaims(superAdminRole, "Branches");
+
+            await roleManager.AddPermissionsClaims(superAdminRole, "PurchaseOrders");
             //TODO : when adding any module seed the cliams for this module to the super admin Role
 
             //await roleManager.AddPermissionsClaims(superAdminRole, "Pages");

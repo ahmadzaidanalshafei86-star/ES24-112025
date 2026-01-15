@@ -102,6 +102,7 @@ namespace ES.Web.Controllers
                 EnvelopeOpeningDate = model.EnvelopeOpeningDate,
                 LastCopyPurchaseDate = model.LastCopyPurchaseDate,
                 CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
                 Details = model.Details,
                 PricesOffered = model.PricesOffered,
                 MetaDescription = model.MetaDescription,
@@ -157,7 +158,7 @@ namespace ES.Web.Controllers
                 var (isUploaded, errorMessage) = await _filesService.UploadASync(
                     model.InitialAwardFile,
                     fileName,
-                    "/images/Tenders"
+                    "/CMS/documents/Tenders"
                 );
 
                 if (isUploaded)
@@ -181,7 +182,7 @@ namespace ES.Web.Controllers
                 var (isUploaded, errorMessage) = await _filesService.UploadASync(
                     model.FinalAwardFile,
                     fileName,
-                    "/images/Tenders"
+                    "/CMS/documents/Tenders"
                 );
 
                 if (isUploaded)
@@ -205,7 +206,7 @@ namespace ES.Web.Controllers
                 var (isUploaded, errorMessage) = await _filesService.UploadASync(
                     model.PricesOfferedAttachment,
                     fileName,
-                    "/images/Tenders"
+                    "/CMS/documents/Tenders"
                 );
 
                 if (isUploaded)
@@ -365,6 +366,7 @@ namespace ES.Web.Controllers
             tender.EnvelopeOpeningDate = model.EnvelopeOpeningDate;
             tender.LastCopyPurchaseDate = model.LastCopyPurchaseDate;
             tender.CreatedDate = DateTime.Now;
+            tender.UpdatedDate = DateTime.Now;
             tender.Details = model.Details;
             tender.PricesOffered = model.PricesOffered;
             tender.MetaDescription = model.MetaDescription;
@@ -391,7 +393,7 @@ namespace ES.Web.Controllers
                 var (isUploaded, errorMessage) = await _filesService.UploadASync(
                     model.InitialAwardFile,
                     fileName,
-                    "/images/Tenders"
+                    "/CMS/documents/Tenders"
                 );
 
                 if (isUploaded)
@@ -414,7 +416,7 @@ namespace ES.Web.Controllers
                 var (isUploaded, errorMessage) = await _filesService.UploadASync(
                     model.FinalAwardFile,
                     fileName,
-                    "/images/Tenders"
+                    "/CMS/documents/Tenders"
                 );
 
                 if (isUploaded)
@@ -437,7 +439,7 @@ namespace ES.Web.Controllers
                 var (isUploaded, errorMessage) = await _filesService.UploadASync(
                     model.PricesOfferedAttachment,
                     fileName,
-                    "/images/Tenders"
+                    "/CMS/documents/Tenders"
                 );
 
                 if (isUploaded)

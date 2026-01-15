@@ -24,12 +24,27 @@
     float: none;
     display: inline-block;
     overflow: hidden;
-    margin: 15px 15px 0 15px;
-    width: 345px;
-    height: 490px;
+    position: relative;
+    float: none;
+    display: inline-block;
+    overflow: hidden;
+    margin: 0px;
+	width: 100%;
     cursor: pointer;
+	border-radius: 12px;
     background-color: #d4d4d4;
     background-blend-mode:multiply;
+}
+.high1
+{ 
+height: 793px;
+	margin-bottom: 15px !important;
+}
+
+.high2
+{ 
+height: 386px;
+	margin-bottom: 15px !important;
 }
 
 .grid figure figcaption {
@@ -670,26 +685,29 @@ text-align:right;
 
 .number
 {
-	position: absolute;
-    margin-top: -100px;  
-    font-size:78px;
-    font-weight:900;
-    opacity: 0.5;
+	position:  relative;
+    margin-bottom: 20px;  
+    font-size:30px;    
+    font-weight:700;
 }
 
 figure.effect-marley h2,
 figure.effect-marley .p  {
 	position: absolute;
-	left: 0px;
 	right: 0px;
+	left: 0px;
 	bottom:0;
-	text-transform:uppercase;
-	background-color:#01b48b;
-	padding: 20px 20px;
-	font-weight:bold;
+	text-transform: capitalize;
+	padding:20px 20px 20px 95px;
+	font-weight:400;
 }
   
-
+.arrow3
+{
+    position: absolute;
+    left: 15px;
+    bottom: 30px;
+}
 
 figure.effect-marley .p {
 	bottom: 0px;
@@ -699,7 +717,7 @@ figure.effect-marley .p {
 	height: 192px;
 	font-size:15px;
     overflow: hidden;
-    background-color:#3d3d3d;
+    background-color:#061222;
     font-weight:normal;    
     padding: 0 20px;
 }
@@ -720,10 +738,9 @@ figure.effect-marley h2 {
 }
 
 figure.effect-marley:hover h2 {
-	-webkit-transform: translate3d(0,-192px,0);
-	transform: translate3d(0,-192px,0);
-	background-color:#3d3d3d;
-	color:#01b48b;
+	-webkit-transform: translate3d(0,50px,0);
+	transform: translate3d(0,-50px,0);
+
 }
 .more a
 {
@@ -735,7 +752,7 @@ figure.effect-marley:hover h2 {
 
 .more a img
 {
-	margin-right:10px;    
+	margin-left:10px;    
     
 }
 

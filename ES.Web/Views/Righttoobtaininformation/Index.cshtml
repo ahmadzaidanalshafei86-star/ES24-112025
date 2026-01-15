@@ -1,0 +1,459 @@
+﻿@model ES.Web.Models.RighttoobtaininformationFormViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@section Styles {
+    <link href="~/WebSite/css/jopform.css" rel="stylesheet" type="text/css" media="all">
+    <style>
+        input[type=checkbox] {
+            display: none;
+        }
+
+        input.visible-checkbox {
+            display: inline-block;
+        }
+
+        .form-check-label {
+            cursor: pointer;
+            user-select: none;
+        }
+    </style>
+}
+
+
+<div class="caption-inner">
+    <div class="inner-bg" style="background: url('/WebSite/images/header2.jpg') no-repeat fixed center center; background-size: cover;"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a href="~/">@Localizer["Home"]</a></li>
+                    <li class="active">@Localizer["Right to obtain information"]</li>
+                </ol>
+                <h3 class="fw-bold"><span>@Localizer["Right to obtain information"]</span></h3>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-inner">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+                }
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                }
+
+                <form id="infoForm" method="post" enctype="multipart/form-data" asp-action="Apply">
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-section mb-5">
+                        <div class="section-content p-4 bg-light rounded">
+
+                            <!-- Applicant Category -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label>@Localizer["Category of the applicant"]</label>
+                                    <div class="form-check">
+                                        <input asp-for="ApplicantCategory" class="form-check-input" type="radio" value="NormalPerson" checked />
+                                        <label class="form-check-label">@Localizer["Normal person"]</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input asp-for="ApplicantCategory" class="form-check-input" type="radio" value="LegalPerson" />
+                                        <label class="form-check-label">@Localizer["Legal person"]</label>
+                                    </div>
+                                    <span asp-validation-for="ApplicantCategory" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Private Sector Data -->
+                            <div id="PrivateSectorData" style="display:none;">
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label asp-for="CompanyName">@Localizer["Company name"]<span class="text-danger">*</span></label>
+                                        <input asp-for="CompanyName" class="form-control" />
+                                        <span asp-validation-for="CompanyName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label asp-for="AuthorizationBookNumber">@Localizer["Authorization book number"]<span class="text-danger">*</span></label>
+                                        <input asp-for="AuthorizationBookNumber" class="form-control" />
+                                        <span asp-validation-for="AuthorizationBookNumber" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label asp-for="CommercialRegistrationNo">@Localizer["Commercial Registration No"]<span class="text-danger">*</span></label>
+                                        <input asp-for="CommercialRegistrationNo" class="form-control" />
+                                        <span asp-validation-for="CommercialRegistrationNo" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label asp-for="AuthorizationLetterDate">@Localizer["Authorization letter date"]<span class="text-danger">*</span></label>
+                                        <input asp-for="AuthorizationLetterDate" type="date" class="form-control" />
+                                        <span asp-validation-for="AuthorizationLetterDate" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label asp-for="DelegateName">@Localizer["Delegate name"]<span class="text-danger">*</span></label>
+                                        <input asp-for="DelegateName" class="form-control" />
+                                        <span asp-validation-for="DelegateName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>@Localizer["The letter of the concerned authority"]</label>
+                                        <input asp-for="LetterFiles" type="file" multiple class="form-control" data-val="false" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Personal Info -->
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label asp-for="Name">@Localizer["Name"]<span class="text-danger">*</span></label>
+                                    <input asp-for="Name" class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3">
+                                    <label asp-for="FatherName">@Localizer["Name of the Father"]<span class="text-danger">*</span></label>
+                                    <input asp-for="FatherName" class="form-control" />
+                                    <span asp-validation-for="FatherName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3">
+                                    <label asp-for="GrandFatherName">@Localizer["Grandfather name"]<span class="text-danger">*</span></label>
+                                    <input asp-for="GrandFatherName" class="form-control" />
+                                    <span asp-validation-for="GrandFatherName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3">
+                                    <label asp-for="FamilyName">@Localizer["Family name"]<span class="text-danger">*</span></label>
+                                    <input asp-for="FamilyName" class="form-control" />
+                                    <span asp-validation-for="FamilyName" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <label asp-for="NationalNumber">@Localizer["National Number"]<span class="text-danger">*</span></label>
+                                    <input asp-for="NationalNumber" class="form-control" />
+                                    <span asp-validation-for="NationalNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>@Localizer["A copy of personal identification (valid)"]</label>
+                                    <input asp-for="PersonalIdCopies" type="file" multiple class="form-control" data-val="false" />
+                                </div>
+                            </div>
+
+                            <!-- Residence & Workplace -->
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12"><label>@Localizer["Place of residence"]</label></div>
+                                <div class="col-md-3">
+                                    <label asp-for="ResidenceGovernorate">@Localizer["Governorate"]</label>
+                                    <input asp-for="ResidenceGovernorate" class="form-control" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label asp-for="ResidenceCity">@Localizer["City"]</label>
+                                    <input asp-for="ResidenceCity" class="form-control" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label asp-for="ResidenceDistrict">@Localizer["District"]</label>
+                                    <input asp-for="ResidenceDistrict" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-12"><label>@Localizer["Workplace"]</label></div>
+                                <div class="col-md-3">
+                                    <label asp-for="WorkplaceGovernorate">@Localizer["Governorate"]</label>
+                                    <input asp-for="WorkplaceGovernorate" class="form-control" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label asp-for="WorkplaceCity">@Localizer["City"]</label>
+                                    <input asp-for="WorkplaceCity" class="form-control" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="Employer">@Localizer["Employer"]</label>
+                                    <input asp-for="Employer" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <label asp-for="CellPhone">@Localizer["Cell phone number"]</label>
+                                    <input asp-for="CellPhone" class="form-control" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="Landline">@Localizer["Landline phone number"]</label>
+                                    <input asp-for="Landline" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <label asp-for="Fax">@Localizer["Fax Number"]</label>
+                                    <input asp-for="Fax" class="form-control" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="POBox">@Localizer["Post office box number and location"]</label>
+                                    <input asp-for="POBox" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <label asp-for="Email">@Localizer["E-mail"]<span class="text-danger">*</span></label>
+                                    <input asp-for="Email" class="form-control" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Identification type -->
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>@Localizer["Identification type"]</label>
+                                    <div class="form-check">
+                                        <input asp-for="IdentificationType" type="radio" value="IDCard" class="form-check-input" />
+                                        <label class="form-check-label">@Localizer["ID card"]</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input asp-for="IdentificationType" type="radio" value="Passport" class="form-check-input" />
+                                        <label class="form-check-label">@Localizer["Passport"]</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input asp-for="IdentificationType" type="radio" value="Other" class="form-check-input" />
+                                        <label class="form-check-label">@Localizer["Other"]</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="div1" style="display:none;">
+                                    <label asp-for="DocumentName">@Localizer["Document name"]<span class="text-danger">*</span></label>
+                                    <input asp-for="DocumentName" class="form-control" />
+                                </div>
+                            </div>
+
+                            <!-- Purpose -->
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>@Localizer["The purpose of obtaining information"]</label>
+                                    <div class="form-check">
+                                        <input asp-for="Purpose" type="radio" value="Studies" class="form-check-input" />
+                                        <label class="form-check-label">@Localizer["Studies and research"]</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input asp-for="Purpose" type="radio" value="Publishing" class="form-check-input" />
+                                        <label class="form-check-label">@Localizer["Publishing"]</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input asp-for="Purpose" type="radio" value="Other" class="form-check-input" />
+                                        <label class="form-check-label">@Localizer["Other"]</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="div2" style="display:none;">
+                                    <label asp-for="OtherPurpose">@Localizer["Other purposes"]<span class="text-danger">*</span></label>
+                                    <input asp-for="OtherPurpose" class="form-control" />
+                                </div>
+                            </div>
+
+                            <!-- Delivery Method -->
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>@Localizer["Method of delivery of information to the requesting party"]</label>
+                                    <div class="form-check">
+                                        <input asp-for="DeliveryMethod" type="radio" value="Photocopy" class="form-check-input" />
+                                        <label class="form-check-label">@Localizer["Photocopy"]</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input asp-for="DeliveryMethod" type="radio" value="CDROM" class="form-check-input" />
+                                        <label class="form-check-label">@Localizer["CD-ROM"]</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input asp-for="DeliveryMethod" type="radio" value="Other" class="form-check-input" />
+                                        <label class="form-check-label">@Localizer["Other"]</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="div3" style="display:none;">
+                                    <label asp-for="OtherDelivery">@Localizer["Other ways"]<span class="text-danger">*</span></label>
+                                    <input asp-for="OtherDelivery" class="form-control" />
+                                </div>
+                            </div>
+
+                            <!-- Information Topic -->
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label asp-for="InformationTopic">@Localizer["Information topic"]<span class="text-danger">*</span></label>
+                                    <textarea asp-for="InformationTopic" class="form-control" rows="5"></textarea>
+                                    <span asp-validation-for="InformationTopic" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Additional Documents -->
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <label>@Localizer["Additional documents"]</label>
+                                    <input asp-for="AdditionalDocuments" type="file" multiple class="form-control" data-val="false" />
+                                </div>
+                            </div>
+
+                            <!-- Agreement & Notes -->
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="">
+                                        • التزم بان استخدم المعلومات للغرض الذي تم الحصول عليها من اجله وان اشير الى مصدر
+                                        المعلومة التي حصلت عليها والمعلومات البيلوغرافيه وحسب الاصول العلمية والقانونية
+                                        المرعيه
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="">
+                                        • يتم اجابة الطلب او رفضه خلال ثلاثين يوما من اليوم الثاني لتاريخ تقديم الطلب
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="">
+                                        • يعتبر الامتناع عن الرد ضمن المدة المحددة قرار بالرفض
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="">
+                                        • في حال عدم حصولك على المعلومة يحق لك تقديم شكوى الى مجلس المعلومات بواسطة مفوض
+                                        المعلومات / مدير عام دائرة المكتبه الوطنية
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="">
+                                        • ملاحظة : تأكد من حصولك على الرقم المرجعي
+                                    </label>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="">
+                                        </label>
+                                        <label class="">
+                                            اقر بان المعلومات المذكورة صحيحه والتزم بان استخدم المعلومات للغرض الذي تم الحصول
+                                            عليها من اجله وان اشير الى مصدر المعلومة التي حصلت عليها والمعلومات الببلوغرافية
+                                            حسب الاصول العلمية والقانونية المرعية
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-check">
+                                        <input asp-for="Agreement" class="form-check-input" type="checkbox" id="Agreement" />
+                                        <label class="form-check-label" for="Agreement">@Localizer["I agree"]</label>
+                                        <span asp-validation-for="Agreement" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <style>
+
+                                input[type="checkbox"] {
+                                    -webkit-appearance: none;
+                                    -moz-appearance: none;
+                                    appearance: none;
+                                }
+
+                                .form-check-input {
+                                    width: 20px;
+                                    height: 20px;
+                                    cursor: pointer;
+                                }
+
+                                    .form-check-input:checked {
+                                        background-color: #0d6efd;
+                                        border-color: #0d6efd;
+                                    }
+
+                                        .form-check-input:checked::after {
+                                            content: '✔';
+                                            display: block;
+                                            color: white;
+                                            font-size: 14px;
+                                            text-align: center;
+                                        }
+
+                            </style>
+                            <!-- Submit -->
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary">@Localizer["Send"]</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
+                @section Scripts {
+                    <partial name="_ValidationScriptsPartial" />
+                    <script src="https://www.google.com/recaptcha/api.js"></script>
+                    <script>
+                        $(document).ready(function () {
+                            // Cache selectors
+                            var $privateSector = $('#PrivateSectorData');
+                            var $docName = $('#div1');
+                            var $otherPurpose = $('#div2');
+                            var $otherDelivery = $('#div3');
+
+                            // Function to toggle a section based on condition
+                            function toggleSection($section, condition) {
+                                if (condition) {
+                                    $section.show();
+                                    $section.find('input, select, textarea').prop('disabled', false);
+                                } else {
+                                    $section.hide();
+                                    $section.find('input, select, textarea').val('').prop('disabled', true);
+                                }
+                            }
+
+                            // Initial toggle
+                            toggleSection($privateSector, $('input[name="ApplicantCategory"]:checked').val() === 'LegalPerson');
+                            toggleSection($docName, $('input[name="IdentificationType"]:checked').val() === 'Other');
+                            toggleSection($otherPurpose, $('input[name="Purpose"]:checked').val() === 'Other');
+                            toggleSection($otherDelivery, $('input[name="DeliveryMethod"]:checked').val() === 'Other');
+
+                            // Event handlers
+                            $('input[name="ApplicantCategory"]').change(function () {
+                                toggleSection($privateSector, $(this).val() === 'LegalPerson');
+                            });
+
+                            $('input[name="IdentificationType"]').change(function () {
+                                toggleSection($docName, $(this).val() === 'Other');
+                            });
+
+                            $('input[name="Purpose"]').change(function () {
+                                toggleSection($otherPurpose, $(this).val() === 'Other');
+                            });
+
+                            $('input[name="DeliveryMethod"]').change(function () {
+                                toggleSection($otherDelivery, $(this).val() === 'Other');
+                            });
+                        });
+                    </script>
+
+
+                }
+            </div>
+
+           
+        </div>
+    </div>
+</div>
+

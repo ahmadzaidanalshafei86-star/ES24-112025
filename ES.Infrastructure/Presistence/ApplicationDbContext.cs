@@ -1,4 +1,5 @@
 ﻿using AKM.Core.Entities;
+using ES.Core.Entities;
 using System.Reflection;
 
 
@@ -17,6 +18,16 @@ namespace ES.Infastructure.Presistence
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryTranslate> CategoriesTranslate { get; set; }
 
+        public DbSet<BookServiceRequest> BookServiceRequests { get; set; }
+
+        public DbSet<RighttoobtaininformationRequest> RighttoobtaininformationRequests { get; set; }
+        public DbSet<RighttoobtaininformationFile> RighttoobtaininformationFiles { get; set; }
+        public DbSet<BookServiceHangar> BookServiceHangars { get; set; }
+        public DbSet<BookServiceRefrigator> BookServiceRefrigators { get; set; }
+
+
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<SupplierMaterial> SupplierMaterials { get; set; }
 
         public DbSet<Material> Materials { get; set; }
         public DbSet<MaterialTranslate> MaterialsTranslate { get; set; }
@@ -39,6 +50,17 @@ namespace ES.Infastructure.Presistence
         public DbSet<TenderMaterial> TenderMaterials { get; set; }
         public DbSet<TenderTranslate> TenderTranslates { get; set; }
 
+        public DbSet<TenderInquiry> TenderInquiries { get; set; }
+
+
+
+        public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+        public DbSet<PurchaseOrderFile> PurchaseOrdersFiles { get; set; }
+       
+        public DbSet<PurchaseOrderMaterial> PurchaseOrderMaterials { get; set; }
+        public DbSet<PurchaseOrderTranslate> PurchaseOrderTranslates { get; set; }
+
+        public DbSet<PurchaseOrderInquiry> PurchaseOrderInquiries { get; set; }
 
         public DbSet<Document> Documents { get; set; }
         public DbSet<GalleryImage> GalleryImages { get; set; }

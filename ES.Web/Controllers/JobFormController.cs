@@ -33,10 +33,16 @@ namespace ES.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Apply(JobFormViewModel model)
         {
+            // تحقق من صحة النموذج
             if (!ModelState.IsValid)
             {
-                var initializedModel = await _jobFormService.IntialzieJobFormViewModel(model.DeclerationId);
-                return View("Index", initializedModel);
+                // يمكن إرسال النموذج مع رسالة خطأ بدون إعادة تحميل الصفحة
+                return Json(new
+                {
+                    success = false,
+                    message = "Please fill all required fields.",
+                    data = model // لإعادة ملء الحقول في الفورم إذا لزم
+                });
             }
 
             try
@@ -50,22 +56,33 @@ namespace ES.Web.Controllers
 
                 if (isSuccess)
                 {
-                    // إعادة التوجيه إلى صفحة نجاح
-                    return RedirectToAction("Success");
+                    // إعادة التوجيه عند النجاح
+                    return Json(new
+                    {
+                        success = true,
+                        redirectUrl = Url.Action("Success")
+                    });
                 }
                 else
                 {
-                    TempData["ErrorMessage"] = "Failed to submit your application. Please try again later.";
-                    var initializedModel = await _jobFormService.IntialzieJobFormViewModel(model.DeclerationId);
-                    return View("Index", initializedModel);
+                    // فشل في إرسال الطلب
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Failed to submit your application. Please try again later.",
+                        data = model
+                    });
                 }
             }
             catch (Exception ex)
             {
-                // في حال حدوث أي خطأ غير متوقع
-                TempData["ErrorMessage"] = $"An error occurred: {ex.Message}";
-                var initializedModel = await _jobFormService.IntialzieJobFormViewModel(model.DeclerationId);
-                return View("Index", initializedModel);
+                // خطأ غير متوقع
+                return Json(new
+                {
+                    success = false,
+                    message = $"An unexpected error occurred: {ex.Message}",
+                    data = model
+                });
             }
         }
 

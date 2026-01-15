@@ -1,9 +1,43 @@
 ﻿@model TopViewModel
 
 
+<div class="top wow fadeInDown animated" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInDown;">
+    <div class="container-fluid">
+        <div class="row">
 
 
 
+            <div class="col-5">
+                <div class="socials">
+
+
+                    <ul>
+
+                        @await Component.InvokeAsync("SocialMediaIcons")
+                       @*  <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                        <li><a href="#"><i class="fab fa-whatsapp"></i></a></li> *@
+                       @*  <li><a href="#"><img alt="" src="~/WebSite/images/top-icons.png"></a></li> *@
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="col-7">
+
+                @if (Model.Pages.Count > 0)
+                {
+                    @Html.Raw(Model.Pages[0].ShortDescription)
+                }
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+@* 
 <div class="top wow fadeInDown animated" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInDown ;">
     <div class="container-fluid">
         <div class="row">
@@ -35,4 +69,4 @@
 
         </div>
     </div>
-</div>
+</div> *@

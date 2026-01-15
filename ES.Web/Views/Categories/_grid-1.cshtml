@@ -4,10 +4,16 @@
 {
 
 
-
-
-
     <div class="col-sm-6 col-md-3">
+        <a href="@Page.LinkUrl">
+            <div class="box-category" style="background:url('/images/Pages/@Page.FeaturedImageUrl') no-repeat center right; background-size:cover">
+                <h1>@Page.Title</h1>
+            </div>
+        </a>
+    </div>
+
+
+    <div class="col-sm-6 col-md-3" style="display:none">
         <a href="@Page.LinkUrl">
             <div class="frame">
                 <img alt="@Page.FeaturedImageAltName" src="~/images/Pages/@Page.FeaturedImageUrl" class="img-responsive">

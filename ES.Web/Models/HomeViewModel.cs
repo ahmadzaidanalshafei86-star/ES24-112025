@@ -9,8 +9,10 @@
         public List<PageViewModel> Pages { get; set; } = new List<PageViewModel>();
         public CategoryWithPagesViewModel NewsTicker { get; set; } = new CategoryWithPagesViewModel();
         public CategoryWithPagesViewModel HomeProducts { get; set; } = new CategoryWithPagesViewModel();
+        public CategoryWithPagesViewModel HomePartners { get; set; } = new CategoryWithPagesViewModel();
         public CategoryWithPagesViewModel HomeServices { get; set; } = new CategoryWithPagesViewModel();
         public CategoryWithPagesViewModel HomeNews { get; set; } = new CategoryWithPagesViewModel();
+        public CategoryWithPagesViewModel HomeNewscalendar { get; set; } = new CategoryWithPagesViewModel();
         public CategoryWithPagesViewModel OurBlogs { get; set; } = new CategoryWithPagesViewModel();
         public CategoryWithPagesViewModel FooterHomeSlider { get; set; } = new CategoryWithPagesViewModel();
     }

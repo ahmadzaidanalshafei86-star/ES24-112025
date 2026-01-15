@@ -25,11 +25,11 @@
 <div class="caption-inner" >
     @if (!string.IsNullOrEmpty(Model.CoverImageUrl))
     {
-        <div class="inner-bg" style="background: url(@Url.Content("~/images/Categories/" + Model.CoverImageUrl)) no-repeat fixed center center;"></div>
+        <div class="inner-bg" style="background: url(@Url.Content("~/images/Categories/" + Model.CoverImageUrl)) no-repeat center center; background-size: cover;"></div>
     }
     else
     {
-        <div class="inner-bg" style="background: url(WebSite/images/header2.jpg) no-repeat fixed center center;"></div>
+        <div class="inner-bg" style="background: url(WebSite/images/1.jpg) no-repeat center center; background-size: cover;"></div>
     }
     <div class="container-fluid">
         <div class="row">
@@ -60,7 +60,8 @@
                             </div>
                         }
 
-                        @await Html.PartialAsync($"_{Model.ThemeName}", Model.Pages)
+                       // @await Html.PartialAsync($"_{Model.ThemeName}", Model.Pages)
+                        @await Html.PartialAsync($"_{Model.ThemeName}", Model)
                     }
                     else if (Model.ThemeName == "list-2")
                     {
@@ -74,9 +75,16 @@
                             </div>
                         }
                     }
+                    else if (Model.ThemeName == "news-1")
+                    {
+
+                        @await Html.PartialAsync($"_{Model.ThemeName}", Model)
+                    }
                     else
                     {
                         @await Html.PartialAsync($"_{Model.ThemeName}", Model.Pages)
+
+                       
                     }
 
                 </div>

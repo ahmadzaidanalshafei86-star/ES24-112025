@@ -120,6 +120,9 @@
   <data name="Attributes" xml:space="preserve">
     <value>Attributes</value>
   </data>
+  <data name="Book Service" xml:space="preserve">
+    <value>Book Service</value>
+  </data>
   <data name="Branches" xml:space="preserve">
     <value>Branches</value>
   </data>
@@ -180,6 +183,15 @@
   <data name="Products" xml:space="preserve">
     <value>Products</value>
   </data>
+  <data name="Purchase Orders" xml:space="preserve">
+    <value>Purchase Orders</value>
+  </data>
+  <data name="PurchaseOrders Inquiry" xml:space="preserve">
+    <value>PurchaseOrders Inquiry</value>
+  </data>
+  <data name="Right to obtain information" xml:space="preserve">
+    <value>Right to obtain information</value>
+  </data>
   <data name="Roles" xml:space="preserve">
     <value>Roles</value>
   </data>
@@ -191,6 +203,9 @@
   </data>
   <data name="Tenders" xml:space="preserve">
     <value>Tenders</value>
+  </data>
+  <data name="Tenders Inquiry" xml:space="preserve">
+    <value>Tenders Inquiry</value>
   </data>
   <data name="Upload documents" xml:space="preserve">
     <value>Upload documents</value>

@@ -74,13 +74,36 @@ builder.Services.AddScoped<FooterService>();
 
 builder.Services.AddScoped<TopService>();
 
+builder.Services.AddScoped<TendersViewService>();
+builder.Services.AddScoped<PurchaseOrdersViewService>();
+builder.Services.AddScoped<TendersArchiveViewService>();
+builder.Services.AddScoped<PurchaseOrdersArchiveViewService>();
+builder.Services.AddScoped<TenderService>();
+builder.Services.AddScoped<PurchaseOrderService>();
+
+builder.Services.AddScoped<RighttoobtaininformationService>();
+builder.Services.AddScoped<TenderInquiryService>();
+
+builder.Services.AddScoped<PurchaseOrderInquiryService>();
+
+
+builder.Services.AddScoped<HangarsViewService>();
+
+builder.Services.AddScoped<RefrigeratorsViewService>();
+
 builder.Services.AddScoped<SilosDeclerationsService>();
 builder.Services.AddScoped<DeclerationsService>();
 builder.Services.AddScoped<JobFormService>();
 builder.Services.AddScoped<SilosJobRequestMapper>();
 builder.Services.AddHttpClient<SilosApiService>();
 builder.Services.AddScoped<SuppliersService>();
+builder.Services.AddScoped<BookServiceService>();
+builder.Services.AddScoped<BookServiceRepository>();
 
+builder.Services.AddScoped<InquiryRepository>();
+builder.Services.AddScoped<PurchaseOrderInquiryRepository>();
+
+builder.Services.AddScoped<RighttoobtaininformationRequestsRepository>();
 
 builder.Services.AddScoped<CategoriesRepository>();
 builder.Services.AddScoped<CareerTranslatesRepository>();
@@ -108,7 +131,9 @@ builder.Services.AddScoped<TenderFilesRepository>();
 builder.Services.AddScoped<MaterialsRepository>();
 builder.Services.AddScoped<MaterialsTranslatesRepository>();
 
-
+builder.Services.AddScoped<PurchaseOrdersRepository>();
+builder.Services.AddScoped<PurchaseOrderTranslatesRepository>();
+builder.Services.AddScoped<PurchaseOrderFilesRepository>();
 
 builder.Services.AddScoped<BranchesRepository>();
 builder.Services.AddScoped<BranchesTranslatesRepository>();
@@ -165,7 +190,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
         }
     };
     var supportedCultures = new[] { enJoCulture, arJoCulture };
-    options.DefaultRequestCulture = new RequestCulture("ar-JO");
+    options.DefaultRequestCulture = new RequestCulture("en-JO");
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
 

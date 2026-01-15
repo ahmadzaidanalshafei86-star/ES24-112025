@@ -301,12 +301,21 @@
     <value>رقم صندوق البريد</value>
   </data>
   <data name="Your national number" xml:space="preserve">
-    <value>رقمك القومي</value>
+    <value>رقمك الوطني</value>
   </data>
   <data name="Phone_Placeholder_Mobile" xml:space="preserve">
     <value>‎07XXXXXXXX</value>
   </data>
   <data name="Phone_Placeholder_Telephone" xml:space="preserve">
     <value>009627XXXXXXXX</value>
+  </data>
+  <data name="Go to Home" xml:space="preserve">
+    <value>الذهاب إلى الصفحة الرئيسية</value>
+  </data>
+  <data name="Your job application has been successfully submitted!" xml:space="preserve">
+    <value>تم إرسال طلب التوظيف بنجاح!</value>
+  </data>
+  <data name="Job Application Submitted" xml:space="preserve">
+    <value>تم تقديم طلب التوظيف</value>
   </data>
 </root>

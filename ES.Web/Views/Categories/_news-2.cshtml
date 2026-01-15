@@ -14,14 +14,13 @@
         @foreach (var item in Model)
         {
 
-         
-
             <div class="row">
-                <div class="col-md-5">
-                    <div style="background:url('images/Pages/@item.FeaturedImageUrl') no-repeat left center;height:280px; background-size: cover;"></div>
+
+                <div class="col-md-4">
+                    <div style="background:url('images/Pages/@item.FeaturedImageUrl') no-repeat left center;height:280px; background-size: cover; border-radius:10px;"></div>
                 </div>
-                <div class="col-md-7 section-news">
-                    <div class="title-news"> @item.Title</div>
+                <div class="col-md-8 section-news">
+                    <div class="title-news">@item.Title</div>
                     <div class="date-news">
                         <i class="far fa-calendar-alt"></i>@if (item.DateInput != null)
                         {
@@ -32,16 +31,22 @@
                             <span>""</span>
                         }
                     </div>
-                    <div>@item.ShortDescription</div>
+                    <div>@Html.Raw(@item.ShortDescription)</div>
                     <div><a href="@item.LinkUrl" class="btn-header btn-more">@Localizer["continue reading"]</a></div>
 
 
                 </div>
-              
-
             </div>
 
+
+
             <hr>
+
+
+
+
+
+           
 
 
 

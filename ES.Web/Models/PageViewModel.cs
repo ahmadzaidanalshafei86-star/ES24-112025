@@ -2,6 +2,7 @@
 {
     public class PageViewModel
     {
+        public int? id { get; set; }
         public string? Slug { get; set; }
         public string? Title { get; set; }
         public string? LongDescription { get; set; }
@@ -24,5 +25,11 @@
         public Form PageForm { get; set; } = new Form();
         public bool HaveForm { get; set; } = false;
         public string? LinkUrl { get; set; }
+        public int? ParentCategoryId { get; set; }
+        public IList<PageViewModel>? SubCategories { get; set; } = new List<PageViewModel>();
+
+        
+
+
     }
 }

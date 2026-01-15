@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Book an Appointment" xml:space="preserve">
+    <value>Book an Appointment</value>
+  </data>
   <data name="Copyright" xml:space="preserve">
     <value>© Copyright All graphics and materials on this site belong to the Jordanian General Company for Silos and Supply</value>
   </data>

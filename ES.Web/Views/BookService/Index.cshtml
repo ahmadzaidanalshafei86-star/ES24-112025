@@ -1,0 +1,229 @@
+﻿@model ES.Web.Models.BookServiceFormViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@section Styles {
+    <link href="~/WebSite/css/jopform.css" rel="stylesheet" type="text/css" media="all">
+    <style>
+        input[type=checkbox] {
+            display: none;
+        }
+
+        input.visible-checkbox {
+            display: inline-block;
+        }
+
+        .form-check-label {
+            cursor: pointer;
+            user-select: none;
+        }
+    </style>
+}
+
+<div class="caption-inner">
+    <div class="inner-bg" style="background: url('/WebSite/images/header2.jpg') no-repeat fixed center center; background-size: cover;"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a href="~/">@Localizer["Home"]</a></li>
+                    <li class="active">@Localizer["Book your service"]</li>
+                </ol>
+                <h3 class="fw-bold"><span>@Localizer["Book your service"]</span></h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content-inner">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+                }
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                }
+
+                <form id="suppliersForm" method="post" asp-action="Apply">
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-section mb-5">
+                        <div class="section-content p-4 bg-light rounded">
+                            <div class="row">
+
+                                <!-- Name -->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Name">@Localizer["Name"]<span class="text-danger">*</span></label>
+                                        <input asp-for="Name" class="form-control" />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Phone Number -->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="PhoneNumber">@Localizer["Phone Number"]<span class="text-danger">*</span></label>
+                                        <input asp-for="PhoneNumber" class="form-control" />
+                                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="EmailAddress">@Localizer["Email Address"]<span class="text-danger">*</span></label>
+                                        <input asp-for="EmailAddress" class="form-control" />
+                                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Branch -->
+                                <div class="col-md-12 mb-3">
+                                    <label asp-for="BranchId">@Localizer["Select Branch"]<span class="text-danger">*</span></label>
+                                    <select asp-for="BranchId" class="form-select" id="branchSelect">
+                                        <option value="">@Localizer["Select Branch"]</option>
+                                        @foreach (var branch in Model.Branches)
+                                        {
+                                            <option value="@branch.Id">@branch.Name</option>
+                                        }
+                                    </select>
+                                    <span asp-validation-for="BranchId" class="text-danger"></span>
+                                </div>
+
+                                <hr />
+
+                                <!-- Hangars -->
+                                <div class="form-group mb-3" id="hangarsGroup" style="display:none;">
+                                    <h5>@Localizer["Hangars"]</h5>
+                                    <div id="hangarsContainer"></div>
+                                </div>
+
+                                <!-- Refrigators -->
+                                <div class="form-group mb-3" id="refrigatorsGroup" style="display:none;">
+                                    <h5>@Localizer["Refrigators"]</h5>
+                                    <div id="refrigatorsContainer"></div>
+                                </div>
+
+                                <!-- Notes -->
+                                <div class="col-md-12 mt-3">
+                                    <div class="form-group">
+                                        <label asp-for="Notes">@Localizer["Notes"]</label>
+                                        <textarea asp-for="Notes" class="form-control" rows="5"></textarea>
+                                        <span asp-validation-for="Notes" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane me-2"></i>@Localizer["Submit Application"]
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const branchSelect = document.getElementById("branchSelect");
+            const hangarsContainer = document.getElementById("hangarsContainer");
+            const refrigatorsContainer = document.getElementById("refrigatorsContainer");
+            const hangarsGroup = document.getElementById("hangarsGroup");
+            const refrigatorsGroup = document.getElementById("refrigatorsGroup");
+
+            // عند تغيير الفرع
+            branchSelect.addEventListener("change", async function () {
+
+                const branchId = this.value;
+
+                // إعادة تعيين المحتوى وإخفاء الأقسام
+                hangarsContainer.innerHTML = "";
+                refrigatorsContainer.innerHTML = "";
+                hangarsGroup.style.display = "none";
+                refrigatorsGroup.style.display = "none";
+
+                if (!branchId) return;
+
+                try {
+                    const response = await fetch(`/BookService/GetBranchDetails?branchId=${branchId}`);
+                    const data = await response.json();
+
+                    // Hangars
+                    if (Array.isArray(data.hangars) && data.hangars.length > 0) {
+                        hangarsGroup.style.display = "block";
+
+                        data.hangars.forEach((h, i) => {
+                            hangarsContainer.insertAdjacentHTML("beforeend", `
+                                <div class="checkbox-item form-check">
+                                    <input class="form-check-input visible-checkbox"
+                                           type="checkbox"
+                                           name="Hangars[${i}].IsSelected"
+                                           id="hangar_${h.id}" />
+                                    <input type="hidden" name="Hangars[${i}].Id" value="${h.id}" />
+                                    <input type="hidden" name="Hangars[${i}].Name" value="${h.name}" />
+                                    <label class="form-check-label" for="hangar_${h.id}">${h.name}</label>
+                                </div>
+                            `);
+                        });
+                    }
+
+                    // Refrigators
+                    if (Array.isArray(data.refrigators) && data.refrigators.length > 0) {
+                        refrigatorsGroup.style.display = "block";
+
+                        data.refrigators.forEach((r, i) => {
+                            refrigatorsContainer.insertAdjacentHTML("beforeend", `
+                                <div class="checkbox-item form-check">
+                                    <input class="form-check-input visible-checkbox"
+                                           type="checkbox"
+                                           name="Refrigators[${i}].IsSelected"
+                                           id="refrigator_${r.id}" />
+                                    <input type="hidden" name="Refrigators[${i}].Id" value="${r.id}" />
+                                    <input type="hidden" name="Refrigators[${i}].Name" value="${r.name}" />
+                                    <label class="form-check-label" for="refrigator_${r.id}">${r.name}</label>
+                                </div>
+                            `);
+                        });
+                    }
+
+                } catch (error) {
+                    console.error("Fetch error:", error);
+                }
+
+            });
+
+            // عند إرسال النموذج: تحويل checkboxes الغير محددة إلى false
+            document.getElementById("suppliersForm").addEventListener("submit", function () {
+                // Hangars
+                document.querySelectorAll("#hangarsContainer input[type=checkbox]").forEach(cb => {
+                    if (!cb.checked) cb.value = "false";
+                    else cb.value = "true";
+                });
+
+                // Refrigators
+                document.querySelectorAll("#refrigatorsContainer input[type=checkbox]").forEach(cb => {
+                    if (!cb.checked) cb.value = "false";
+                    else cb.value = "true";
+                });
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,235 @@
+﻿@model TendersViewViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+
+@inject IViewLocalizer Localizer
+
+@{
+    var currentCulture = CultureInfo.CurrentCulture.Name;
+}
+
+<!-- Page Header -->
+<div class="caption-inner">
+    <div class="inner-bg" style="background: url('/WebSite/images/header2.jpg') no-repeat fixed center center; background-size: cover;"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 text-center text-light py-4">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="/">@Localizer["Home"]</a></li>
+                    <li class="breadcrumb-item active">@Localizer["Tenders"]</li>
+                </ol>
+                <h3 class="fw-bold"><span>@Localizer["Tenders"]</span></h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table thead.custom-header {
+        background-color: #0361af;
+        color: white;
+    }
+
+    .btn-custom {
+        color: #032241;
+        background-color: #FFFFFF;
+        border-color: #032241;
+        transition: 0.3s;
+    }
+</style>
+
+<!-- Filter/Search -->
+<div class="container my-4">
+    <form id="filterForm" class="row g-3 align-items-end">
+        <div class="col-md-3">
+            <label>@Localizer["Tender Name"]</label>
+            <input type="text" id="filterName" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <label>@Localizer["Start Date"]</label>
+            <input type="date" id="filterStartDate" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <label>@Localizer["End Date"]</label>
+            <input type="date" id="filterEndDate" class="form-control" />
+        </div>
+        <div class="col-md-2" style="display:none">
+            <label>@Localizer["Envelope Opening Date"]</label>
+            <input type="date" id="filterEnvelopeDate" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <label>@Localizer["Copy Price"]</label>
+            <input type="number" id="filterCopyPrice" class="form-control" />
+        </div>
+        <div class="col-md-1">
+            <button type="button" id="btnSearch" class="btn btn-primary w-100">@Localizer["Search"]</button>
+            <button type="button" id="btnReset" class="btn btn-secondary w-100 mt-1">@Localizer["Reset"]</button>
+        </div>
+    </form>
+</div>
+
+<!-- Tenders Content -->
+<div class="content-inner py-5">
+    <div class="container">
+        @if (Model.Tenders != null && Model.Tenders.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped align-middle">
+                    <thead class="custom-header">
+                        <tr>
+                            <th scope="col">@Localizer["Tender Code"]</th>
+                            <th scope="col">@Localizer["Tender Name"]</th>
+                            <th scope="col">@Localizer["Copy Price"]</th>
+                            <th scope="col">@Localizer["Start Date"]</th>
+                            <th scope="col">@Localizer["End Date"]</th>
+                            <th scope="col">@Localizer["Last Purchase Date"]</th>
+                            <th scope="col">@Localizer["Envelope Opening Date"]</th>
+                            <th scope="col">@Localizer["Details / Appendices"]</th>
+                            <th scope="col">@Localizer["Initial Award"]</th>
+                            <th scope="col">@Localizer["Final Award"]</th>
+                            <th scope="col">@Localizer["Prices Offered"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var t in Model.Tenders)
+                        {
+                            <tr data-start="@t.StartDate.ToString("yyyy-MM-dd")"
+                                data-end="@t.EndDate.ToString("yyyy-MM-dd")">
+
+                                <td>@t.Code</td>
+                                <td>@t.Title</td>
+                                <td>@t.CopyPrice</td>
+                                <td>@t.StartDate.ToString("yyyy-MM-dd")</td>
+                                <td>@t.EndDate.ToString("yyyy-MM-dd hh:mm tt")</td>
+                                <td>@(t.LastCopyPurchaseDate.HasValue? t.LastCopyPurchaseDate.Value.ToString("yyyy-MM-dd hh:mm tt") : "-")</td>
+                                <td>@(t.EnvelopeOpeningDate.HasValue? t.EnvelopeOpeningDate.Value.ToString("yyyy-MM-dd hh:mm tt") : "-")</td>
+
+                                <td>
+                                    @if (!string.IsNullOrEmpty(t.Slug))
+                                    {
+                                        <a href="/Tender/@t.Slug"
+                                           class="btn btn-sm btn-info"
+                                           style="background-color: #0361af; border-color: #0361af; color: #fff;">
+                                            @Localizer["View"]
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span>-</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (!string.IsNullOrEmpty(t.InitialAwardFileUrl))
+                                    {
+                                        <a href="@t.InitialAwardFileUrl" class="btn btn-sm btn-custom" target="_blank">@Localizer["Download"]</a>
+                                    }
+                                    else
+                                    {
+                                        <span>-</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (!string.IsNullOrEmpty(t.FinalAwardFileUrl))
+                                    {
+                                        <a href="@t.FinalAwardFileUrl" class="btn btn-sm btn-custom" target="_blank">@Localizer["Download"]</a>
+                                    }
+                                    else
+                                    {
+                                        <span>-</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (!string.IsNullOrEmpty(t.PricesOfferedAttachmentUrl))
+                                    {
+                                        <a href="@t.PricesOfferedAttachmentUrl" class="btn btn-sm btn-custom" target="_blank">@Localizer["Download"]</a>
+                                    }
+                                    else
+                                    {
+                                        <span>-</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info text-center">
+                @Localizer["No Tenders available at the moment."]
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const rows = Array.from(document.querySelectorAll(".table tbody tr"));
+
+        const filterName = document.getElementById("filterName");
+        const filterStartDate = document.getElementById("filterStartDate");
+        const filterEndDate = document.getElementById("filterEndDate");
+        const filterEnvelopeDate = document.getElementById("filterEnvelopeDate");
+        const filterCopyPrice = document.getElementById("filterCopyPrice");
+
+        const btnSearch = document.getElementById("btnSearch");
+        const btnReset = document.getElementById("btnReset");
+
+        function parseDate(str) {
+            if (!str || str === "-") return null;
+            return new Date(str);
+        }
+
+        function filterRows() {
+            const nameVal = filterName.value.toLowerCase();
+            const startVal = filterStartDate.value; // yyyy-MM-dd
+            const endVal = filterEndDate.value;     // yyyy-MM-dd
+            const envelopeVal = filterEnvelopeDate.value ? new Date(filterEnvelopeDate.value) : null;
+            const priceVal = filterCopyPrice.value;
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll("td");
+
+                const tenderName = cells[1].innerText.toLowerCase();
+                const copyPrice = cells[2].innerText.trim();
+
+                const rowStart = row.dataset.start;
+                const rowEnd = row.dataset.end;
+                const envelopeDate = parseDate(cells[6].innerText);
+
+                let show = true;
+
+                if (nameVal && !tenderName.includes(nameVal)) show = false;
+                if (startVal && rowStart < startVal) show = false;
+                if (endVal && rowEnd > endVal) show = false;
+                if (envelopeVal && (!envelopeDate || envelopeDate.toISOString().slice(0,10) !== envelopeVal.toISOString().slice(0,10))) show = false;
+                if (priceVal && copyPrice !== priceVal) show = false;
+
+                row.style.display = show ? "" : "none";
+            });
+        }
+
+        btnSearch.addEventListener("click", function(e) {
+            e.preventDefault();
+            filterRows();
+        });
+
+        btnReset.addEventListener("click", function(e) {
+            e.preventDefault();
+            filterName.value = "";
+            filterStartDate.value = "";
+            filterEndDate.value = "";
+            filterEnvelopeDate.value = "";
+            filterCopyPrice.value = "";
+            rows.forEach(row => row.style.display = "");
+        });
+    });
+</script>
+
+

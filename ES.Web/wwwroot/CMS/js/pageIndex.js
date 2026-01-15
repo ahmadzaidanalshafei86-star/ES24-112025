@@ -180,9 +180,9 @@ async function togglePageStatus(pageId, element) {
                 showConfirmButton: true
             });
 
-            setTimeout(function () {
-                location.reload(); // Reload the page after 3 seconds
-            }, 2000);
+            //setTimeout(function () {
+            //    location.reload(); // Reload the page after 3 seconds
+            //}, 2000);
         } else if (response.status === 403) {
             // Handle permission error with SweetAlert2
             Swal.fire({

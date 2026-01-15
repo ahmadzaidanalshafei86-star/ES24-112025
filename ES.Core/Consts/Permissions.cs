@@ -67,6 +67,13 @@ namespace ES.Core.Consts
             public const string Update = "Permissions.Tenders.Update";
             public const string Delete = "Permissions.Tenders.Delete";
         }
+        public static class PurchaseOrders
+        {
+            public const string Create = "Permissions.PurchaseOrders.Create";
+            public const string Read = "Permissions.PurchaseOrders.Read";
+            public const string Update = "Permissions.PurchaseOrders.Update";
+            public const string Delete = "Permissions.PurchaseOrders.Delete";
+        }
         public static class Categories
         {
             public const string Create = "Permissions.Categories.Create";

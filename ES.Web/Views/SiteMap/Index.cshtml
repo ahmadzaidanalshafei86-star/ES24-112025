@@ -1,0 +1,59 @@
+﻿@model ES.Web.Models.MenuViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@section Styles {
+    <style>
+       
+    </style>
+}
+
+
+
+<div class="caption-inner">
+    <div class="inner-bg" style="background: url('/WebSite/images/header2.jpg') no-repeat fixed center center; background-size: cover;"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a href="~/">@Localizer["Home"]</a></li>
+                    <li class="active">@Localizer["Site Map"]</li>
+                </ol>
+                <h3 class="fw-bold"><span>@Localizer["Site Map"]</span></h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content-inner">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+               
+                <div class="sitemap-container">
+                    <ul class="sitemap-list">
+                        @foreach (var menuItem in Model.MenuItems)
+                        {
+                            <li>
+                                <a href="@(menuItem.Type == "Page"
+                                                                                      ? Url.Action("Index", "Page", new { slug = menuItem.Url })
+                                                                                      : menuItem.Type == "Category"
+                                                                                          ? Url.Action("Index", "Categories", new { slug = menuItem.Url })
+                                                                                          : menuItem.Url)">
+                                @menuItem.Title
+                            </a>
+
+                            @if (menuItem.Children.Any())
+                                {
+                                    <ul>
+                                        @await Html.PartialAsync("_MItemChildren", menuItem.Children)
+                                    </ul>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

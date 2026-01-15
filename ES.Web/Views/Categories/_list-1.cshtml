@@ -1,26 +1,208 @@
-﻿@model IEnumerable<PageViewModel>
+﻿@model ES.Web.Models.CategoryWithPagesViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using System.Globalization
 
-<div class="col-md-4">
+@{
+    var isRtl = CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+}
+
+<link href="~/WebSite/assets/css/tipsy.css" rel="stylesheet" type="text/css" media="all">
+<link href="~/WebSite/assets/css/litebox-home.css" rel="stylesheet" type="text/css" media="all">
+<style>
+
+    .litebox a {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        width: 315px;
+        margin: 10px 4px 4px 4px;
+        max-height: 364px;
+        display: inline-block;
+        overflow: hidden;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #a69d9d;
+        transition: all .5s;
+    }
+</style>
+<style>
+    .subcategory-pages { display:block; }
+    .content-section { display:none; }
+    .active-link { font-weight:bold; color:#0056b3; }
+</style>
+
+<div class="col-md-3">
     <div class="list-group">
-        @foreach (var Page in Model)
+
+        <!-- الصفحات الرئيسية -->
+        @foreach (var Page in Model.Pages)
         {
-            <div type="button" class="list-group-item">
-                <i class="fa fa-angle-@(System.Globalization.CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? "left" : "right") arrow-icon"
-                   aria-hidden="true"></i>
-                <a href="javascript:void(0);"
-                   class="scroll-link"
-                   data-target="link-@Page.Slug">@Page.Title</a>
+            <div class="list-group-item main-item">
+                <i class="fa fa-angle-@(isRtl ? "left" : "right") arrow-icon"></i>
+                <a href="#" class="scroll-link" data-target="link-@Page.Slug">@Page.Title</a>
             </div>
         }
+
+        <!-- الفئات الفرعية -->
+        @if (Model.Subcategories?.Any() == true)
+        {
+            foreach (var sub in Model.Subcategories)
+            {
+                <div class="list-group-item sub-item">
+                    <i class="fa fa-angle-@(isRtl ? "left" : "right") arrow-icon"></i>
+                    <a href="javascript:void(0);" class="subcat-toggle">@sub.Name</a>
+
+                    @if (sub.Pages?.Any() == true)
+                    {
+                        <div class="subcategory-pages" style="@(isRtl ? "margin-right:15px" : "margin-left:15px")">
+                            @foreach (var sp in sub.Pages)
+                            {
+                                <div class="list-group-item sub-page-item">
+                                    <i class="fa fa-angle-@(isRtl ? "left" : "right") arrow-icon"></i>
+                                    <a href="#" class="scroll-link" data-target="link-@sp.Slug">@sp.Title</a>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        }
+
     </div>
 </div>
-<div class="col-md-8">
-    @foreach (var Page in Model)
+
+
+<div class="col-md-9">
+
+    <!-- محتوى الصفحات الرئيسية -->
+    @foreach (var Page in Model.Pages)
     {
-        <div class="resizable content-section" id="link-@Page.Slug" tabindex="-1" style="display: none;">
+        <div class="content-section" id="link-@Page.Slug">
             <div class="title margin-top">@Page.Title</div>
             @Html.Raw(Page.LongDescription)
+
+            @if (Page.GalleryImages?.Any() == true)
+            {
+                <div class="photo-gallery">
+                    @foreach (var img in Page.GalleryImages)
+                    {
+                        <a href="~/images/Pages/GalleryImages/@img.GalleryImageUrl" style=" box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+                    width: 315px;
+                    margin: 10px 4px 4px 4px;
+                    max-height: 364px;
+                    display: inline-block;
+                    overflow: hidden;
+                    padding: 5px;
+                    border-radius: 5px;
+                    border: 1px solid #a69d9d;
+                    transition: all .5s;"
+                           class="litebox"
+                           data-litebox-group="group-@img.PageId">
+                            <img src="~/images/Pages/GalleryImages/@img.GalleryImageUrl"
+                                 alt="@img.GalleryImageAltName" class="img-responsive thumbs" />
+                        </a>
+                    }
+                </div>
+            }
+
             <hr />
         </div>
     }
+
+    <!-- محتوى صفحات الفئات الفرعية -->
+    @if (Model.Subcategories?.Any() == true)
+    {
+        @foreach (var sub in Model.Subcategories)
+        {
+            @foreach (var sp in sub.Pages)
+            {
+                <div class="content-section" id="link-@sp.Slug">
+                    <div class="title margin-top">@sp.Title</div>
+                    @Html.Raw(sp.LongDescription)
+
+                    @if (sp.GalleryImages?.Any() == true)
+                    {
+                        <div class="photo-gallery">
+                            @foreach (var img in sp.GalleryImages)
+                            {
+                                <a href="~/images/Pages/GalleryImages/@img.GalleryImageUrl" style=" box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+                            width: 315px;
+                            margin: 10px 4px 4px 4px;
+                            max-height: 364px;
+                            display: inline-block;
+                            overflow: hidden;
+                            padding: 5px;
+                            border-radius: 5px;
+                            border: 1px solid #a69d9d;
+                            transition: all .5s;"
+                                   class="litebox"
+                                   data-litebox-group="group-@img.PageId">
+                                    <img src="~/images/Pages/GalleryImages/@img.GalleryImageUrl"
+                                         alt="@img.GalleryImageAltName"
+                                         class="img-responsive thumbs" />
+                                </a>
+                            }
+                        </div>
+                    }
+                    <hr />
+                </div>
+            }
+        }
+    }
+
 </div>
+
+@section Scripts {
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const isRtl = @(isRtl.ToString().ToLower());
+
+    // عرض أول صفحة تلقائيًا
+    const firstSection = document.querySelector(".content-section");
+    if (firstSection) firstSection.style.display = "block";
+
+    // فتح / إغلاق SubCategory
+    document.querySelectorAll(".subcat-toggle").forEach(toggle => {
+        toggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            const box = this.parentElement.querySelector(".subcategory-pages");
+            if (box) box.style.display = (box.style.display === "block" ? "none" : "block");
+        });
+    });
+
+    // عند الضغط على صفحة
+    document.querySelectorAll(".scroll-link").forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const targetId = this.dataset.target;
+            const target = document.getElementById(targetId);
+
+            // إخفاء جميع الصفحات
+            document.querySelectorAll(".content-section")
+                .forEach(sec => sec.style.display = "none");
+
+            // إزالة التنسيق
+            document.querySelectorAll(".scroll-link")
+                .forEach(a => a.classList.remove("active-link"));
+
+            // إرجاع الأسهم
+            document.querySelectorAll(".arrow-icon").forEach(icon => {
+                icon.className = "fa fa-angle-" + (isRtl ? "left" : "right") + " arrow-icon";
+            });
+
+            // عرض المطلوب
+            if (target) target.style.display = "block";
+
+            // إضافة style على العنصر المختار
+            this.classList.add("active-link");
+
+            // تغيير السهم
+            const arrow = this.previousElementSibling;
+            if (arrow) arrow.className = "fa fa-angle-down arrow-icon";
+        });
+    });
+
+});
+</script>
+}

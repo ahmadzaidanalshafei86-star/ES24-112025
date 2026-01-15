@@ -2,6 +2,7 @@
 {
     public class CategoryWithPagesViewModel
     {
+        public int Id { get; set; }  // ← أضف هذا السطر
         public string? Slug { get; set; }
         public string? Name { get; set; }
         public string? ShortDescription { get; set; }
@@ -13,5 +14,18 @@
         public string? ThemeName { get; set; }
 
         public IList<PageViewModel> Pages = new List<PageViewModel>();
+        // ← أضف هذه الخاصية لدعم الفئات الفرعية
+
+       
+
+        public List<CategoryWithPagesViewModel> Subcategories { get; set; } = new List<CategoryWithPagesViewModel>();
+        public List<CategoryWithPagesViewModel> RelatedNewsList { get; set; } = new List<CategoryWithPagesViewModel>();
+
+        public int CurrentPage { get; set; }
+        public int PageSize { get; set; }
+        public int TotalItems { get; set; }
+
+        public int TotalPages => (int)Math.Ceiling((decimal)TotalItems / PageSize);
+
     }
 }

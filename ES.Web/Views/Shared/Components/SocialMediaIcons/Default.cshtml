@@ -24,7 +24,8 @@
     var path = Context.Request.Path.Value?.Trim('/').ToLower();
     var isHome = string.IsNullOrEmpty(path);
 }
-
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <div class="socials">
     <ul>
 
@@ -41,12 +42,12 @@
 
 
 
-        <li class="language">
+       @*  <li class="language">
             <a href="javascript:void(0)" onclick="submitLanguageToggle('@targetCulture', '@returnUrl')">
-               @*  <img alt="@languageTitle" src="@Url.Content($"~/WebSite/images/{languageTitle}.png")" /> *@
+             
                 @languageTitle
             </a>
-        </li>
+        </li> *@
 
 
 

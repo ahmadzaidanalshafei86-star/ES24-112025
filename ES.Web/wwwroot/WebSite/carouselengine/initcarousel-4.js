@@ -25,10 +25,10 @@ jQuery(document).ready(function(){
     }
     jQuery("#amazingcarousel-4").amazingcarousel({
         jsfolder:jsFolder,
-        width:285,
+        width:300,
         height:250,
         skinsfoldername:"",
-        interval:2850,
+        interval:3000,
         itembottomshadowimagetop:99,
         donotcrop:false,
         random:false,
@@ -53,7 +53,7 @@ jQuery(document).ready(function(){
         hoveroverlayimage:"hoveroverlay-64-64-5.png",
         itembottomshadowimage:"itembottomshadow-100-98-3.png",
         lightboxshowdescription:false,
-        width:285,
+        width:300,
         navswitchonmouseover:false,
         showhoveroverlayalways:false,
         transitioneasing:"easeOutExpo",
@@ -97,7 +97,7 @@ jQuery(document).ready(function(){
         playvideoimage:"playvideo-64-64-0.png",
         transitionduration:1000,
         visibleitems:6,
-        imagewidth:285,
+        imagewidth:300,
         usescreenquery:false,
         bottomshadowimagewidth:110,
         screenquery:{

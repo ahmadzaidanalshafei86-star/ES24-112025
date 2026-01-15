@@ -120,6 +120,9 @@
   <data name="Attributes" xml:space="preserve">
     <value>السمات</value>
   </data>
+  <data name="Book Service" xml:space="preserve">
+    <value>خدمة الحجز</value>
+  </data>
   <data name="Branches" xml:space="preserve">
     <value>الفروع</value>
   </data>
@@ -180,6 +183,15 @@
   <data name="Products" xml:space="preserve">
     <value>المنتجات</value>
   </data>
+  <data name="Purchase Orders" xml:space="preserve">
+    <value>طلبات الشراء</value>
+  </data>
+  <data name="PurchaseOrders Inquiry" xml:space="preserve">
+    <value>استفسار عن طلبات الشراء</value>
+  </data>
+  <data name="Right to obtain information" xml:space="preserve">
+    <value>حق الحصول على معلومة</value>
+  </data>
   <data name="Roles" xml:space="preserve">
     <value>الأدوار</value>
   </data>
@@ -191,6 +203,9 @@
   </data>
   <data name="Tenders" xml:space="preserve">
     <value>العطاءات</value>
+  </data>
+  <data name="Tenders Inquiry" xml:space="preserve">
+    <value>استفسار عن العطاءات</value>
   </data>
   <data name="Upload documents" xml:space="preserve">
     <value>رفع الملفات</value>

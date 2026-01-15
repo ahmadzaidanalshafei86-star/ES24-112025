@@ -20,5 +20,6 @@
         Materials,
         Tenders,
         Branches,
+        PurchaseOrders,
     }
 }

@@ -37,6 +37,7 @@ namespace ES.Web.Services
                         Slug = p.Slug,
                         ShortDescription = pageTranslate?.ShortDescription ?? p.ShortDescription,
                         CoverImageUrl = p.CoverImageUrl,
+                        FeaturedImageUrl = p.FeatruedImageUrl,
                         VideoUrl = p.VideoURL,
                     };
                 })

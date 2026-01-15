@@ -1,12 +1,285 @@
-﻿@model IEnumerable<PageViewModel>
+﻿@* @model IEnumerable<PageViewModel>
 
-@using System.Text.RegularExpressions
 @using Microsoft.AspNetCore.Mvc.Localization
-@using System.Globalization
 @inject IViewLocalizer Localizer
+ *@
+@model ES.Web.Models.CategoryWithPagesViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using System.Text.Encodings.Web
+@using System.Text.RegularExpressions
+<div class="row">
+    <!-- LEFT SIDE: Main News List -->
+    <div class="col-md-8">
+        <div class="row">
+            @foreach (var item in Model.Pages)
+            {
+
+                <div class="col-sm-6">
+                    <div class="news-inner">
+                        <img src="images/Pages/@item.FeaturedImageUrl"
+                             alt="@item.Title" class="img-responsive">
+                        <div class="title-1">
+                            <i class="far fa-calendar-alt"></i>
+                            @{
+                                if (item.DateInput.HasValue)
+                                {
+                                    @item.DateInput.Value.ToString("dd MMM, yyyy")
+                                }
+                                else
+                                {
+                                    @Localizer["No Date"]
+                                }
+                            }
+                        </div>
+                        <div class="text">@item.Title</div>
+                        <div class="more-news-inner"><a href="@item.LinkUrl" class="btn-header btn-more">@Localizer["Read More"]</a></div>
+                    </div>
+                </div>
+             @*    <div class="col-md-6 col-sm-6 wow fadeInUp animated"
+                     data-wow-delay=".2s" style="visibility: visible;">
+                    <div class="newspage">
+
+                        <!-- Featured Image -->
+                        <img src="~/WebSite/images/Pages/@item.FeaturedImageUrl"
+                             alt="@item.Title"
+                             class="img-responsive" />
+
+                        <div class="text-all">
+
+                            <!-- Title -->
+                            <div class="headline">
+                                @item.Title
+                            </div>
+
+                            <!-- Date -->
+                            <div class="date-news">
+                                <i class="far fa-calendar-alt"></i>
+                                @{
+                                    if (item.DateInput.HasValue)
+                                    {
+                                        @item.DateInput.Value.ToString("dd MMM, yyyy")
+                                    }
+                                    else
+                                    {
+                                        @Localizer["No Date"]
+                                    }
+                                }
+                            </div>
+
+                            <!-- Short Description -->
+                            <div class="details">
+                                @{
+                                    var cleanText = Regex.Replace(item.LongDescription ?? "", "<.*?>", "");
+                                    var shortText = cleanText.Length > 150 ? cleanText.Substring(0, 150) + "..." : cleanText;
+                                }
+                                @shortText
+                            </div>
+
+                            <!-- Read More -->
+                            <div>
+                                <a href="@item.LinkUrl" class="btn-header btn-more">
+                                    @Localizer["Read More"]
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div> *@
+            }
+        </div>
+
+       
+        <!-- PAGING -->
+        @if (Model.TotalPages > 1)
+        {
+            <nav aria-label="Page navigation" class="text-center" style="margin-top: 20px;">
+                <ul class="pagination">
+
+                    <!-- First Page -->
+                    <li class="@(Model.CurrentPage == 1 ? "disabled" : "")">
+                        <a href="@Url.Action("Index", "Categories", new { slug = Model.Slug, page = 1 })" aria-label="First">
+                            <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                    </li>
+
+                    <!-- Previous Page -->
+                    <li class="@(Model.CurrentPage == 1 ? "disabled" : "")">
+                        <a href="@Url.Action("Index", "Categories", new { slug = Model.Slug, page = Model.CurrentPage - 1 })" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <!-- Page Numbers -->
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="@(i == Model.CurrentPage ? "active" : "")">
+                            <a href="@Url.Action("Index", "Categories", new { slug = Model.Slug, page = i })">@i</a>
+                        </li>
+                    }
+
+                    <!-- Next Page -->
+                    <li class="@(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                        <a href="@Url.Action("Index", "Categories", new { slug = Model.Slug, page = Model.CurrentPage + 1 })" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+
+                    <!-- Last Page -->
+                    <li class="@(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                        <a href="@Url.Action("Index", "Categories", new { slug = Model.Slug, page = Model.TotalPages })" aria-label="Last">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+        }
+
+    </div>
+
+  @*   <!-- LEFT SIDE: Main News List -->
+    <div class="col-md-8">
+        <div class="row">
+            @foreach (var item in Model.Pages)
+            {
+                <div class="col-md-6 col-sm-6 wow fadeInUp animated"
+                     data-wow-delay=".2s" style="visibility: visible;">
+                    <div class="newspage">
+
+                        <!-- Featured Image -->
+                        <img src="~/WebSite/images/Pages/@item.FeaturedImageUrl"
+                             alt="@item.Title"
+                             class="img-responsive" />
+
+                        <div class="text-all">
+
+                            <!-- Title -->
+                            <div class="headline">
+                                @item.Title
+                            </div>
+
+                            <!-- Date -->
+                            <div class="date-news">
+                                <i class="far fa-calendar-alt"></i>
+                                @{
+                                    if (item.DateInput.HasValue)
+                                    {
+                                        @item.DateInput.Value.ToString("dd MMM, yyyy")
+                                    }
+                                    else
+                                    {
+                                        @Localizer["No Date"]
+                                    }
+                                }
+                            </div>
+
+                            <!-- Short Description -->
+                            <div class="details">
+                                @{
+                                    var cleanText = Regex.Replace(item.LongDescription ?? "", "<.*?>", "");
+                                    var shortText = cleanText.Length > 150 ? cleanText.Substring(0, 150) + "..." : cleanText;
+                                }
+                                @shortText
+                            </div>
 
 
-<div class="col-md-12">
+                            <!-- Read More -->
+                            <div>
+                                <a href="@item.LinkUrl" class="btn-header btn-more">
+                                    @Localizer["Read More"]
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div> *@
+    <!-- RIGHT SIDE: Related Categories / News -->
+    <div class="col-md-4">
+        @if (Model.RelatedNewsList?.Any() == true)
+        {
+            @foreach (var relatedCategory in Model.RelatedNewsList)
+            {
+                <div class="related-category">
+                    <div class="title-2">@relatedCategory.Name</div>
+
+                    @if (relatedCategory.Pages?.Any() == true)
+                    {
+                        @foreach (var news in relatedCategory.Pages)
+                        {
+                            var imageUrl = !string.IsNullOrEmpty(news.FeaturedImageUrl)
+                            ? Url.Content("~/images/Pages/" + news.FeaturedImageUrl)
+                            : Url.Content("~/images/default.jpg");
+
+
+                            <div class="box-news-all">
+                                <a href="@news.LinkUrl">
+                                    <div class="box-news" style="background-image:url('@imageUrl')"></div>
+                                    <div class="box-news-text">
+                                        <div class="news2-time">
+                                            <i class="far fa-calendar-alt"></i>
+                                            @{
+                                                if (news.DateInput.HasValue)
+                                                {
+                                                    @news.DateInput.Value.ToString("dd MMM, yyyy")
+                                                }
+                                                else
+                                                {
+                                                    @Localizer["No Date"]
+                                                }
+                                            }
+                                        </div>
+                                        <div class="text-all">@news.Title</div>
+                                    </div>
+                                </a>
+                            </div>
+
+
+                            <hr>
+
+
+                            @* <div class="box-program-all">
+                                <a href="@news.LinkUrl">
+                                    <div class="box-program" style="background-image:url('@imageUrl');"></div>
+                                    <div class="box-program-text">
+                                        <div class="program2-time">@news.Title</div>
+                                        <div class="text-all">
+                                            @{
+                                                var cleanText2 = Regex.Replace(news.LongDescription ?? "", "<.*?>", "");
+                                                var shortText2 = cleanText2.Length > 100 ? cleanText2.Substring(0, 100) + "..." : cleanText2;
+                                            }
+                                            @shortText2
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div> *@
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-muted">@Localizer["No pages found for this category"]</div>
+                    }
+                </div>
+            }
+        }
+        else
+        {
+            <div class="text-muted">@Localizer["No related categories found"]</div>
+        }
+    </div>
+
+
+
+</div>
+
+
+@* 
+
+<div class="col-md-12" style="display:none">
     @foreach (var Page in Model.Select((value, index) => new { value, index }))
     {
         bool isOddRow = Page.index % 2 == 0;
@@ -75,4 +348,4 @@
 
         <hr />
     }
-</div>
+</div> *@

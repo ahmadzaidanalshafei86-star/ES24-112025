@@ -2,6 +2,7 @@
 using ES.Web.Models;
 using ES.Web.Models.Client;
 using ES.Web.Services;
+using Newtonsoft.Json;
 
 
 namespace ES.Web.Controllers
@@ -38,14 +39,38 @@ namespace ES.Web.Controllers
                 HomeWelcome = await _categoryService.GetCategoryWithPagesByIdAsync(5) ?? new CategoryWithPagesViewModel(),
                 SliderArticles = await _categoryService.GetCategoryWithPagesByIdAsync(3) ?? new CategoryWithPagesViewModel(),
                 HomeProducts = await _categoryService.GetCategoryWithPagesByIdAsync(6,9) ?? new CategoryWithPagesViewModel(),
+                HomePartners = await _categoryService.GetCategoryWithPagesByIdAsync(21, 6) ?? new CategoryWithPagesViewModel(),
                 HomeServices = await _categoryService.GetCategoryWithPagesByIdAsync(7, 9) ?? new CategoryWithPagesViewModel(),
                 Pages = pages,
                 NewsTicker = await _categoryService.GetCategoryWithPagesByIdAsync(4, 10) ?? new CategoryWithPagesViewModel(),
                 HomeNews = await _categoryService.GetCategoryWithPagesByIdAsync(4, 3) ?? new CategoryWithPagesViewModel(),
+                HomeNewscalendar = await _categoryService.GetCategoryWithPagesByIdAsync(4, 50) ?? new CategoryWithPagesViewModel(),
                 OurBlogs = await _categoryService.GetCategoryWithPagesByIdAsync(4, 3) ?? new CategoryWithPagesViewModel(),
                 FooterHomeSlider = await _categoryService.GetCategoryWithPagesByIdAsync(12) ?? new CategoryWithPagesViewModel(),
             };
+            //// تجهيز الأحداث للكـالندر
+            //var calendarEvents = model.HomeNewscalendar.Pages
+            //    .Where(x => x.DateInput.HasValue)
+            //    .Select(x => new
+            //    {
+            //        title = x.Title,
+            //        start = x.DateInput.Value.ToString("yyyy-MM-dd"),
+            //        url = x.LinkUrl
+            //    }).ToList();
 
+            //ViewBag.CalendarEvents = JsonConvert.SerializeObject(calendarEvents);
+
+            var calendarEvents = model.HomeNewscalendar.Pages
+    .Where(x => x.DateInput.HasValue)
+    .Select(x => new
+    {
+        title = x.Title,
+        start = x.DateInput.Value.Date.ToString("yyyy-MM-dd"), // 🔴 مهم جداً
+        url = x.LinkUrl
+    })
+    .ToList();
+
+            ViewBag.CalendarEvents = JsonConvert.SerializeObject(calendarEvents);
             return View(model);
         }
     }

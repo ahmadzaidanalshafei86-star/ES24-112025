@@ -10,6 +10,7 @@ figure.test {
 figure.test img {
 	width: 100%;
 	height: 100%;
+	border-radius:10px;
 }
 figure.test figcaption {
 	position: absolute;
@@ -66,7 +67,8 @@ figure.test:hover figcaption {
 	position: relative;
 	cursor: pointer;	
 	border:1px #e6e6e6 solid;
-	perspective: 500px; 
+	perspective: 500px; 	border-radius:10px;
+
 	margin-bottom:30px;
 }
 
@@ -78,8 +80,9 @@ figure.test:hover figcaption {
 
 .frame img {
 	width: 100%;
-	height:295px;    
-	object-fit: cover;
+	height:260px;    
+	object-fit: cover;	border-radius:10px;
+
 }
 	.frame .details {
 		width: 80%;
@@ -91,9 +94,10 @@ figure.test:hover figcaption {
 		color: #FFFFFF;
 		transform: translate(-50%, -50%) rotateY(90deg);
 		transform-origin: 50%;
-		background:rgb(229 182 13 / 79%);
+        background:rgb(0 0 0 / 65%);
 		opacity: 0;
-		transition: all 0.4s ease-in;
+		transition: all 0.4s ease-in;	border-radius:10px;
+
 	}
 .frame:hover .details {
 	transform: translate(-50%, -50%) rotateY(0deg);
@@ -116,7 +120,6 @@ figure.test:hover figcaption {
 {
      font-size:18px !important;
      height:25px;
-     overflow:hidden;
      color:#FFFFFF!important;
 }
 .frame .details p
@@ -127,17 +130,16 @@ figure.test:hover figcaption {
 }
 .frame .details h2
 {
-    font-size:20px!important;
-    overflow: hidden;
-    margin-top: 35%;line-height: 30px;
+    font-size:18px!important;
+    margin-top: 35%;
     color: #FFFFFF!important;
 }
 
 
 .category-title
 {
-    font-size: 20px;
-    color: #1b1b1b;
+    font-size:18px;
+    color: #000;
     text-align:center;    
     margin: 0 0 25px 0;
 }

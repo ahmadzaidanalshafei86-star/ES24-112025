@@ -344,7 +344,7 @@ var myDropzone = new Dropzone("#myDropzone", {
     previewsContainer: "#sortablePreviews", // Target the custom container for previews
     url: "#",
     autoProcessQueue: false,
-    maxFiles: 10,
+    maxFiles: 25,
     maxFilesize: 20, // File size limit in MB
     acceptedFiles: ".jpg,.jpeg,.png,.gif",
     addRemoveLinks: true,
@@ -435,7 +435,7 @@ var docDropzone = new Dropzone("#docDropzone", {
     previewsContainer: "#sortableDocPreviews",
     url: "#",
     autoProcessQueue: false,
-    maxFiles: 10,
+    maxFiles: 25,
     maxFilesize: 10, // File size limit in MB
     acceptedFiles: ".pdf,.doc,.docx",
     addRemoveLinks: true,

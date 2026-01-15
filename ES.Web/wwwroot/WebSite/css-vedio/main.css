@@ -44,7 +44,6 @@ vertical-align:middle; display:table-cell
 
 
 
-.clearfix{content:"";display:table;clear:both}footer{clear:both;background:#2b4f71;margin:0;padding:5%;text-align:center}
 
 .scroll-top:hover{color:#fff !important;background-color:#333;text-decoration:none;border-bottom:none}
 .scroll-top{display:none;position:fixed;bottom:1rem;right:1rem;width:3.2rem;height:3.2rem;line-height:2;font-size:1.4rem;color:#fff;background-color:rgba(0,0,0,0.5);text-decoration:none;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;border-bottom:none;text-align:center;cursor:pointer}

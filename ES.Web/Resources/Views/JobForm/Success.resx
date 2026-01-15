@@ -309,4 +309,13 @@
   <data name="Phone_Placeholder_Telephone" xml:space="preserve">
     <value>009627XXXXXXXX</value>
   </data>
+  <data name="Go to Home" xml:space="preserve">
+    <value>Go to Home</value>
+  </data>
+  <data name="Your job application has been successfully submitted!" xml:space="preserve">
+    <value>Your job application has been successfully submitted!</value>
+  </data>
+  <data name="Job Application Submitted" xml:space="preserve">
+    <value>Job Application Submitted</value>
+  </data>
 </root>

@@ -5,7 +5,7 @@
 #amazingcarousel-2 .amazingcarousel-image {	
 	position: relative;
 	padding: 0px;
-	margin:15px;
+	margin:5px;
 	background-color: #fff;    
 	border-radius: 0px;    
 	-webkit-transition: 0.6s;
@@ -19,8 +19,8 @@
 
 #amazingcarousel-2 .amazingcarousel-image img {
 	display: block;
-	width: 240px;
-	height:200px;
+	width: 150px;
+	height:145px;
 	object-fit:contain;
 	max-width: 100%;
 	border: 0;

@@ -84,6 +84,14 @@ namespace ES.Web.Areas.EsAdmin.Services
                     count++;
                 }
             }
+            else if (entityType == "PurchaseOrder")
+            {
+                while (_context.PurchaseOrders.Any(c => c.Slug == uniqueSlug && (excludeId == null || c.Id != excludeId)))
+                {
+                    uniqueSlug = $"{slug}-{count}";
+                    count++;
+                }
+            }
             else if (entityType == "EcomCategory")
             {
                 while (_context.EcomCategories.Any(ec => ec.Slug == uniqueSlug && (excludeId == null || ec.Id != excludeId)))

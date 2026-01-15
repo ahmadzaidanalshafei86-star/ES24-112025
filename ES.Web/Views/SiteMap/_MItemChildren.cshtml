@@ -1,0 +1,21 @@
+﻿@model List<ES.Web.Models.MenuItemViewModel>
+
+@foreach (var child in Model)
+{
+    <li>
+        <a href="@(child.Type == "Page"
+                                   ? Url.Action("Index", "Page", new { slug = child.Url })
+                                   : child.Type == "Category"
+                                       ? Url.Action("Index", "Categories", new { slug = child.Url })
+                                       : child.Url)">
+        @child.Title
+    </a>
+
+    @if (child.Children.Any())
+        {
+            <ul>
+                @await Html.PartialAsync("_MenuItemChildren", child.Children)
+            </ul>
+        }
+    </li>
+}

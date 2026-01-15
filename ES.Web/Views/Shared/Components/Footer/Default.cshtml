@@ -13,130 +13,63 @@
 @if (Model.Pages.Count > 0)
 
 {
+
+
     <div class="footer">
-        <div class="container-fluid">
+
+        <div class="container-fluid wow fadeInUp animated" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
             <div class="row">
-                <div class="col-sm-12 col-md-3">
+                <div class="col-sm-12 col-md-4">
                    
+
+
                     @if (Model.Pages.Count > 0)
 
 
                     {
-                       
+
                         @Html.Raw(Model.Pages[0].ShortDescription)
                     }
 
-                    <div>
-                        <span class="follow resizable">@Localizer["follow"]</span>
+                    <ul class="socials">
+                    
 
                         @await Component.InvokeAsync("SocialMediaIcons")
-                      @*   <span class="socials">
-                            <ul>
-                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fab fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                            </ul>
-                        </span> *@
+                    </ul>
+
+                </div>
+                <div class="col-md-2"></div>
+
+                <div class="col-sm-4 col-md-2">
+                  
 
 
-                    </div>
+                    @if (Model.Pages.Count > 1)
+
+
+                    {
+
+                        @Html.Raw(Model.Pages[1].ShortDescription)
+                    }
 
                 </div>
 
-                <div class="col-sm-12 col-md-5">
-                    <div class="row">
-
-                        <div class="col-md-7">
-                          
-                            @if (Model.Pages.Count > 1)
-
-
-                            {
-
-                                @Html.Raw(Model.Pages[1].ShortDescription)
-                            }
-
-                        </div>
-
-
-                        <div class="col-sm-4 col-md-5">
-                            
-
-
-                            @if (Model.Pages.Count > 2)
-
-
-                            {
-
-                                @Html.Raw(Model.Pages[2].ShortDescription)
-                            }
-
-
-                        </div>
-
-                    </div>
-
-
-
-
-
-
-                    <form id="newsletterForm">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="newletter">
-                                <div class="footer-title resizable">
-
-
-                                        @Localizer["Register to get our latest news"]
-                                </div>
-                                <div class="row footer-margin">
-                                     
-                                    <div class="col-md-8 col-sm-8 col-xs-7">
-                                        <div class="form-group">
-                                           @*  <input type="" class="form-control" id="" placeholder="البريد الالكتروني"> *@
-
-                                                <input type="email"
-                                                       class="form-control"
-                                                       id="newsletterEmail"
-                                                       name="Email"
-                                                       maxlength="128"
-                                                       required
-                                                       placeholder="@Localizer["Enter your email"]"
-                                                       
-                                                       autocomplete="off">
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-5">
-                                        
-                                       @*  <button class="btn btn-newsletter" type="submit">اشتراك</button> *@
-                                            <button class="btn btn-newsletter" type="submit">
-                                                @Localizer["Subscribe"]
-                                            </button>
-                                    
-                                    </div>
-                                    
-                                </div>
-
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                    </form>
-                </div>
-
-
-                <div class="col-sm-12 col-md-4">
+                <div class="col-sm-4 col-md-2">
                    
+
+
+
+                    @if (Model.Pages.Count > 2)
+
+
+                    {
+
+                        @Html.Raw(Model.Pages[2].ShortDescription)
+                    }
+                </div>
+
+                <div class="col-sm-4 col-md-2">
+                    
 
 
                     @if (Model.Pages.Count > 3)
@@ -150,8 +83,24 @@
                 </div>
 
             </div>
+
+
+        </div>
+
+    </div>
+    <div class="copyright">
+        <div class="container-fluid wow fadeInUp" data-wow-delay="1.2s" style="visibility: visible; animation-delay: 1.2s; animation-name: fadeInUp;">
+            <div class="row">
+                <div class="col-md-12">Copyright © 2025 by Es.jo. All Rights Reserved.</div>
+            </div>
         </div>
     </div>
+
+
+
+   
+
+   
 
 }
 

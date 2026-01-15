@@ -6,6 +6,51 @@
 @inject IViewLocalizer Localizer
 
 <div class="col-md-12">
+
+
+  
+
+
+
+    <div class="news" style="padding: unset;">
+        <ul>
+
+
+            @foreach (var item in Model)
+            {
+                <li>
+                    <img alt="@item.FeaturedImageAltName" src="images/Pages/@item.FeaturedImageUrl" class="img-responsive">
+                    <div class="date">@item.DateInput.Value.ToString("dd")<br>@item.DateInput.Value.ToString("MMM")</div>
+                    @* <div class="title-small"><span>Acc-fine</span></div> *@
+                    <div class="title-1">
+                        @item.Title
+                    </div>
+                    <div class="text">
+                        @Html.Raw(item.ShortDescription)
+                    </div>
+                    <div><a href="@item.LinkUrl" class="btn-header btn-more">@Localizer["continue reading"]</a></div>
+                </li>
+
+
+          
+
+
+
+             
+
+
+
+            }
+
+            
+
+
+       
+
+
+        </ul>
+    </div>
+@* 
     <div class="row">
         @foreach(var item in Model)
         {
@@ -43,5 +88,5 @@
 
           
         }
-    </div>
+    </div> *@
 </div>

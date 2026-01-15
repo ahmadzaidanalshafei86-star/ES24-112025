@@ -1,0 +1,267 @@
+﻿@model PurchaseOrderFormViewModel
+
+@using System.Globalization
+@using ES.Web.Areas.EsAdmin.Models
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["PurchaseOrder"];
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/CMS/lib/dropzone/dropzone.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-5-theme/1.1.1/select2-bootstrap-5-theme.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+}
+
+<div class="row">
+    <div class="col-xl-12 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <div class="border p-3 rounded">
+                    <h6 class="mb-0 text-uppercase">
+                        @((Model.Id > 0)
+                                                ? Localizer["Edit purchaseOrder"]
+                                                : Localizer["Add purchaseOrder"])
+                    </h6>
+                    <hr>
+
+                    <form id="purchaseOrderForm" method="post" enctype="multipart/form-data" asp-controller="PurchaseOrders">
+                        @Html.AntiForgeryToken()
+                        @if (Model?.Id is not null)
+                        {
+                            <input type="hidden" asp-for="Id" />
+                        }
+
+                        <div class="row g-3">
+                            <!-- Title -->
+                            <div class="col-md-6">
+                                <label class="form-label">@Localizer["PurchaseOrder title"]<span class="text-danger">*</span></label>
+                                <input asp-for="Title" class="form-control" required />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+
+                            <!-- Code -->
+                            <div class="col-md-6">
+                                <label class="form-label">@Localizer["PurchaseOrder code"]<span class="text-danger">*</span></label>
+                                <input asp-for="Code" class="form-control" required />
+                                <span asp-validation-for="Code" class="text-danger"></span>
+                            </div>
+
+                          
+
+                            <!-- Dates -->
+                            <div class="col-md-6">
+                                <label class="form-label">@Localizer["Start date"]<span class="text-danger">*</span></label>
+                                <input asp-for="StartDate" type="date" class="form-control" required />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">@Localizer["End date"]<span class="text-danger">*</span></label>
+                                <input asp-for="EndDate" type="date" class="form-control" required />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">@Localizer["Envelope opening date"]</label>
+                                <input asp-for="EnvelopeOpeningDate" type="date" class="form-control" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">@Localizer["Number of participating companies"]<span class="text-danger">*</span></label>
+                                <input asp-for="Numberofparticipatingcompanies" class="form-control" required />
+                                <span asp-validation-for="Numberofparticipatingcompanies" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">@Localizer["The number of companies referred to"]<span class="text-danger">*</span></label>
+                                <input asp-for="Thenumberofcompaniesreferredto" class="form-control" required />
+                                <span asp-validation-for="Thenumberofcompaniesreferredto" class="text-danger"></span>
+                            </div>
+
+
+                            <!-- Details -->
+                            <div class="col-md-12">
+                                <label class="form-label">@Localizer["Details"]</label>
+                                <textarea id="tinyMCEDetails" asp-for="Details" class="form-control" rows="4"></textarea>
+                                <span asp-validation-for="Details" class="text-danger"></span>
+                            </div>
+
+                         
+
+                            <!-- Meta Description / Keywords -->
+                            <div class="col-md-6">
+                                <label class="form-label">@Localizer["Meta Description"]</label>
+                                <textarea asp-for="MetaDescription" class="form-control" rows="2"></textarea>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">@Localizer["Meta Keywords"]</label>
+                                <textarea asp-for="MetaKeywords" class="form-control" rows="2"></textarea>
+                            </div>
+
+                            <!-- PurchaseOrder Materials (Multi-Select) -->
+
+                            <div class="col-md-12">
+                                <label class="form-label">@Localizer["PurchaseOrder Materials"]</label>
+                                <select asp-for="SelectedMaterialIds"
+                                        asp-items="Model.Materials"
+                                        class="form-select"
+                                        multiple="multiple"
+                                        id="purchaseOrderMaterialsSelect">
+                                </select>
+                                <span asp-validation-for="SelectedMaterialIds" class="text-danger"></span>
+                            </div>
+
+                          @*   <div class="col-md-12">
+                                <label class="form-label">@Localizer["PurchaseOrder Materials"]</label>
+                                <select asp-for="SelectedMaterialIds" asp-items="Model.Materials" class="form-select" multiple="multiple" id="purchaseOrderMaterialsSelect">
+                                </select>
+                                <span asp-validation-for="SelectedMaterialIds" class="text-danger"></span>
+                            </div>
+ *@
+                            <!-- PurchaseOrder Image -->
+                            <div class="col-md-6">
+                                <label class="form-label">@Localizer["PurchaseOrder image"]</label>
+                                <input asp-for="PurchaseOrderImage" type="file" class="form-control"
+                                       accept="image/jpeg, image/png, image/webp"
+                                       onchange="previewImage(event, 'PurchaseOrderImagePreview')" />
+                                <div class="text-center mt-2">
+                                    <img id="PurchaseOrderImagePreview"
+                                         src="@(!string.IsNullOrEmpty(Model.PurchaseOrderImageUrl) ? Url.Content($"~/images/PurchaseOrders/{Model.PurchaseOrderImageUrl}") : Url.Content("~/images/placeholder.png"))"
+                                         class="img-fluid rounded shadow"
+                                         style="max-width: 100%; max-height: 250px; object-fit: cover;" />
+                                </div>
+                                <input type="hidden" asp-for="PurchaseOrderImageUrl" />
+                            </div>
+
+                            <!-- Attachments -->
+                            <div class="col-md-6">
+                                <label class="form-label">@Localizer["PurchaseOrder files (documents)"]</label>
+                                <div id="purchaseOrderFilesDropzone" class="dropzone">
+                                    <div id="sortablePurchaseOrderFiles"></div>
+                                </div>
+                            </div>
+
+                           
+
+
+                         
+
+
+
+
+                           
+
+                            <!-- Flags / Blink -->
+                            <div class="col-lg-12 mt-3">
+                                <div class="form-check">
+                                    <input asp-for="Publish" class="form-check-input" type="checkbox" />
+                                    <label class="form-check-label">@Localizer["Publish purchaseOrder?"]</label>
+                                </div>
+
+                              
+
+                           
+
+                                <div class="form-check mt-2">
+                                    <input asp-for="MoveToArchive" class="form-check-input" type="checkbox" />
+                                    <label class="form-check-label">@Localizer["Move to archive?"]</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary">@Localizer["Submit"]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@{
+
+    var existingDocuments = Model.ExistingFiles;
+
+}
+<script>
+    // نجعلها متاحة لعالم JS
+    window.existingPurchaseOrderFiles = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(existingDocuments));
+</script>
+@section Plugins {
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/CMS/js/tinyMce.js"></script>
+    <script src="~/CMS/lib/dropzone/dropzone.min.js"></script>
+    <script src="~/CMS/lib/sortable/sortable.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Initialize PurchaseOrder Materials multi-select
+            $('#purchaseOrderMaterialsSelect').select2({
+                placeholder: "@Localizer["Select materials"]",
+                theme: "bootstrap-5"
+            });
+
+             
+
+            // Blink toggle
+            const $toggle = $('#SpecialOfferBlinkToggle');
+            const $blinkSection = $('#blinkDatesSection');
+
+            function updateBlinkSection() {
+                if ($toggle.is(':checked')) {
+                    $blinkSection.slideDown(200);
+                } else {
+                    $blinkSection.slideUp(200);
+                }
+            }
+
+            $toggle.on('change', updateBlinkSection);
+            updateBlinkSection();
+
+            // Dynamic Other Attachments
+            let attachmentIndex = $('#otherAttachmentsContainer .other-attachment-item').length;
+
+            $('#addAttachmentBtn').on('click', function () {
+                const html = `
+                    <div class="row g-2 mb-2 other-attachment-item">
+                        <div class="col-md-5">
+                            <input type="text" name="PurchaseOrderOtherAttachments[${attachmentIndex}].Name" class="form-control" placeholder="@Localizer["Attachment name"]" required />
+                        </div>
+                        <div class="col-md-5">
+                            <input type="file" name="PurchaseOrderOtherAttachments[${attachmentIndex}].File" class="form-control" accept=".pdf,.doc,.docx,.jpg,.png" />
+                        </div>
+                        <div class="col-md-2 text-end">
+                            <button type="button" class="btn btn-danger remove-attachment w-100">@Localizer["Remove"]</button>
+                        </div>
+                    </div>`;
+                $('#otherAttachmentsContainer').append(html);
+                attachmentIndex++;
+            });
+
+            $(document).on('click', '.remove-attachment', function () {
+                $(this).closest('.other-attachment-item').remove();
+            });
+        });
+    </script>
+
+  
+    <script> var existingDocuments = @Html.Raw(Json.Serialize(existingDocuments));</script>
+
+
+
+    <script src="~/CMS/js/purchaseOrderForm.js"></script>
+
+    <script>
+        var currentLanguage = '@CultureInfo.CurrentCulture.Name'; // This will set the current language, e.g., "en-US" or "ar"
+    </script>
+}
